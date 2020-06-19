@@ -1,0 +1,12 @@
+{
+    "/assets/js/app.js": "/assets/js/app.js",
+    "/assets/css/app.css": "/assets/css/app.css",
+    "/assets/js/vendor-jquery.dataTables.js": "/assets/js/vendor-jquery.dataTables.js",
+    "/assets/js/vendor-slimscroll.js": "/assets/js/vendor-slimscroll.js",
+    "/assets/js/app.min.js": "/assets/js/app.min.js",
+    "/assets/css/app.min.css": "/assets/css/app.min.css",
+    "/assets/css/vendor-pf4.css": "/assets/css/vendor-pf4.css",
+    "/assets/css/vendor-pf4.min.css": "/assets/css/vendor-pf4.min.css",
+    "/assets/js/vendor-slimscroll.min.js": "/assets/js/vendor-slimscroll.min.js",
+    "/assets/js/vendor-jquery.dataTables.min.js": "/assets/js/vendor-jquery.dataTables.min.js"
+}

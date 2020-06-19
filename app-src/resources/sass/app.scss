@@ -1,0 +1,31 @@
+// Fonts
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
+
+#mainSideNav.collapse:not(.show), #mainSideNav .pf-c-nav__subnav.collapse:not(.show), .pf-c-dropdown__menu {
+  display: none;
+}
+#mainSideNav.collapse.show, #mainSideNav .pf-c-nav__subnav.collapse.show {
+  display:grid;
+  overflow: hidden;
+}
+#mainSideNav.collapsing {
+  height: 100vh !important;
+}
+
+.pf-c-dropdown__menu.show {
+  display:inherit;
+}
+
+.ws-fullscreen-example {
+  height: 100vh;
+}
+.pf-c-alert {
+  margin-bottom:2rem;
+}

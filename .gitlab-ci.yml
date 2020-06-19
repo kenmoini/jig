@@ -1,0 +1,53 @@
+cache: {}
+
+# You specify the stages. Those are the steps that GitLab will go through
+# Order matters.
+stages:
+  - build
+  - tag
+  - push
+  - cleanup
+
+Build:
+  stage: build
+  tags:
+    - thebus
+    - shell
+  before_script:
+    - docker version
+  script:
+    - docker build -t jig:$CI_COMMIT_SHORT_SHA .
+
+Tag:
+  stage: tag
+  tags:
+    - thebus
+    - shell
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_HOST
+  script:
+    - docker tag jig:$CI_COMMIT_SHORT_SHA jig:latest
+    - docker tag jig:$CI_COMMIT_SHORT_SHA $REGISTRY_HOST/public/jig:$CI_COMMIT_SHORT_SHA
+    - docker tag jig:$CI_COMMIT_SHORT_SHA $REGISTRY_HOST/public/jig:latest
+
+Push:
+  stage: push
+  tags:
+    - thebus
+    - shell
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_HOST
+  script:
+    - docker push $REGISTRY_HOST/public/jig:$CI_COMMIT_SHORT_SHA
+    - docker push $REGISTRY_HOST/public/jig:latest
+
+Cleanup:
+  stage: cleanup
+  tags:
+    - thebus
+    - shell
+  script:
+    - docker rmi $REGISTRY_HOST/public/jig:latest
+    - docker rmi $REGISTRY_HOST/public/jig:$CI_COMMIT_SHORT_SHA
+    - docker rmi jig:latest
+    - docker rmi jig:$CI_COMMIT_SHORT_SHA
