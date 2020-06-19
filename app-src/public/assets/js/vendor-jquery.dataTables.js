@@ -26322,7 +26322,7 @@ return jQuery;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/kemo/Development/redhat-at-home/workshop-svc-worker/app-src/node_modules/datatables.net/js/jquery.dataTables.js */"./node_modules/datatables.net/js/jquery.dataTables.js");
+module.exports = __webpack_require__(/*! /Users/kenmoini/Development/jig/app-src/node_modules/datatables.net/js/jquery.dataTables.js */"./node_modules/datatables.net/js/jquery.dataTables.js");
 
 
 /***/ })

@@ -25,9 +25,13 @@ cd app-src/
 composer install
 npm install
 npm run dev
+cp .env.example .env
+touch db.sqlite
+php artisan key:generate
+php artisan migrate
 ```
 
-Set your HTTP server root to the `public/` sub-directory.
+Set your HTTP server root to the `public/` sub-directory.  Oe run `php artisan serve`
 
 
 ### Deploy as a Container

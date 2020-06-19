@@ -1,5 +1,7 @@
 @extends('layouts.pf4-utility')
 
+@section('pageTitle', 'Verify your email address')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
