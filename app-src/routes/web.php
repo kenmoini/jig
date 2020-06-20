@@ -28,6 +28,10 @@ Route::prefix('panel')->middleware(['verified'])->group(function() {
   Route::get('workshops', 'WorkshopController@index')->name('panel.get.workshops.index');
   Route::get('workshops/create', 'WorkshopController@create')->name('panel.get.workshops.create');
   Route::post('workshops/create', 'WorkshopController@store')->name('panel.post.workshops.store');
+  Route::get('workshops/show/{id}', 'WorkshopController@show')->name('panel.get.workshops.show');
+  Route::get('workshops/edit/{id}', 'WorkshopController@edit')->name('panel.get.workshops.edit');
+  Route::post('workshops/edit/{id}', 'WorkshopController@update')->name('panel.post.workshops.update');
+  Route::post('workshops/destroy/{id}', 'WorkshopController@destroy')->name('panel.post.workshops.destroy');
 
   // Events
   Route::get('events', 'EventController@index')->name('panel.get.events.index');

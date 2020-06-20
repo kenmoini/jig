@@ -1,7 +1,7 @@
 </section>
 <div id="page-footer" class="container pf-u-p-xl">
   <p>
-    Copyright &copy; {{ date('Y') }} Red Hat, Inc.
+    <em>Crafted by Polyglot Ventures</em>
   </p>
 </div>
 

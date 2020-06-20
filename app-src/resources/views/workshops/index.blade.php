@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<table class="pf-c-table pf-m-grid-lg" role="grid" aria-label="Listing of Workshops" id="workshops-table">
+<table class="pf-c-table pf-m-grid-lg pf-u-mt-xl pf-u-mb-xl" role="grid" aria-label="Listing of Workshops" id="workshops-table">
   <thead>
     <tr role="row">
       <th class="pf-c-table__sort pf-m-selected" role="columnheader" aria-sort="ascending" scope="col">
@@ -91,7 +91,13 @@
         <td role="cell" data-label="Workshop name">{{ $workshop->name }}</td>
         <td role="cell" data-label="Created by">{{ $workshop->user()->first()->name }}</td>
         <td role="cell" data-label="Duration">{{ $workshop->typical_length_in_hours }}</td>
-        <td role="cell" data-label="Actions"><a href="#" class="pf-c-button">Edit</a><a href="#" class="pf-c-button">View</a></td>
+        <td role="cell" data-label="Actions">
+          <a href="{{ route('panel.get.workshops.edit', $workshop->id) }}" class="pf-c-button pf-m-primary pf-u-mr-md">Edit</a><a href="{{ route('panel.get.workshops.show', $workshop->id) }}" class="pf-c-button pf-m-secondary pf-u-mr-md">View</a>
+          <a href="#" class="pf-c-button pf-m-danger" onclick="event.preventDefault();document.getElementById('delete-workshop-{{ $workshop->id }}-form').submit();">Delete</a>
+          <form id="delete-workshop-{{ $workshop->id }}-form" action="{{ route('panel.post.workshops.destroy', $workshop->id) }}" method="POST" style="display: none;">
+              @csrf
+          </form>
+        </td>
       </tr>
       @endforeach
     @else

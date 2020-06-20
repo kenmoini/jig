@@ -82,7 +82,8 @@ class WorkshopController extends Controller
      */
     public function show($id)
     {
-        //
+      $workshop = Workshop::find($id)->first();
+      return view('workshops.show')->with(['workshop' => $workshop]);
     }
 
     /**
@@ -93,7 +94,8 @@ class WorkshopController extends Controller
      */
     public function edit($id)
     {
-        //
+      $workshop = Workshop::find($id)->first();
+      return view('workshops.edit')->with(['workshop' => $workshop]);
     }
 
     /**
@@ -105,7 +107,36 @@ class WorkshopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      // validate
+      // read more on validation at http://laravel.com/docs/validation
+      $rules = array(
+        'workshop_name'       => 'required',
+        'workshop_curriculum_endpoint'       => 'required',
+        'workshop_curriculum_slug'       => 'required',
+        'workshop_typical_length_in_hours' => 'required|numeric'
+      );
+      $validator = Validator::make($request->all(), $rules);
+
+      // process the login
+      if ($validator->fails()) {
+          return Redirect::route('panel.get.workshops.create')
+              ->withErrors($validator)
+              ->withInput();
+      } else {
+          // store
+          $workshop = Workshop::find($id);
+          $workshop->name = $request->input('workshop_name');
+          $workshop->slug = Str::slug($request->input('workshop_name'), '-');
+          $workshop->description = $request->input('workshop_description');
+          $workshop->curriculum_slug = $request->input('workshop_curriculum_slug');
+          $workshop->typical_length_in_hours = $request->input('workshop_typical_length_in_hours');
+          $workshop->curriculum_endpoint = $request->input('workshop_curriculum_endpoint');
+          $workshop->save();
+
+          // redirect
+          Session::flash('message-success', 'Successfully updated workshop!');
+          return Redirect::route('panel.get.workshops.index');
+      }
     }
 
     /**
@@ -116,6 +147,14 @@ class WorkshopController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Workshop::destroy($id);
+      
+      // Session::flash('message-danger', 'This is a danger message!');
+      // Session::flash('message-warning', 'This is an orange warning message!');
+      // Session::flash('message-info', 'This is a simple info message!');
+      // Session::flash('message-success', 'This is a successful message!');
+
+      Session::flash('message-success', 'Workshop successfully deleted.');
+      return Redirect::route('panel.get.workshops.index');
     }
 }
