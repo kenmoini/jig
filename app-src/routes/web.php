@@ -40,6 +40,8 @@ Route::prefix('panel')->middleware(['verified'])->group(function() {
 
   // Events
   Route::get('events', 'EventController@index')->name('panel.get.events.index');
+  Route::get('events/create', 'EventController@create')->name('panel.get.events.create');
+  Route::post('events/create', 'EventController@store')->name('panel.post.events.store');
 
   // Students
   Route::get('students', 'StudentController@index')->name('panel.get.students.index');

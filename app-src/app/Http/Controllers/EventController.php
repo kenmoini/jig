@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
+use App\Workshop;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -13,7 +15,8 @@ class EventController extends Controller
      */
     public function index()
     {
-      return view('events.index');
+      $events = Event::all();
+      return view('events.index')->with(['events' => $events]);
     }
 
     /**
@@ -23,7 +26,8 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+      $workshops = Workshop::with(['assets'])->get();
+      return view('events.create')->with(['workshops' => $workshops]);
     }
 
     /**
@@ -34,7 +38,42 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      // validate
+      // read more on validation at http://laravel.com/docs/validation
+      $rules = array(
+        'event_workshop_id' => 'required',
+        'event_title'       => 'required',
+        'event_start_time'  => 'required',
+        'event_end_time'    => 'required',
+        'event_event_id'    => 'required',
+        'event_seat_count'  => 'required|numeric'
+      );
+      $validator = Validator::make($request->all(), $rules);
+
+      // process the event
+      if ($validator->fails()) {
+          return Redirect::route('panel.get.events.create')
+              ->withErrors($validator)
+              ->withInput();
+      } else {
+          // store
+          $event = new Event;
+          $event->user_id = Auth::user()->id;
+          $event->workshop_id = $request->input('event_workshop_id');
+          $event->event_title = $request->input('event_title');
+          $event->description = $request->input('event_description');
+          $event->private_notes = $request->input('event_private_notes');
+          $event->start_time = $request->input('event_start_time');
+          $event->end_time = $request->input('event_end_time');
+          $event->event_id = $request->input('event_event_id');
+          $event->seat_count = $request->input('event_seat_count');
+          $event->effective_asset_data = $request->input('');
+          $event->save();
+
+          // redirect
+          Session::flash('message', 'Successfully created event!');
+          return Redirect::route('panel.get.events.index');
+      }
     }
 
     /**

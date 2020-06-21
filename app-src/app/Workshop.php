@@ -39,6 +39,10 @@ class Workshop extends Model
     return $this->hasMany('App\Asset', 'workshop_id');
   }
 
+  public function events() {
+    return $this->hasMany('App\Event', 'workshop_id');
+  }
+
   public function getBaseDomainAttribute() {
     $url = parse_url($this->curriculum_endpoint);
     return $url['host'];

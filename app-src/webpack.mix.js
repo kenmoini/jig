@@ -43,16 +43,32 @@ lodash(patternflyAssets).forEach(function(asset, type) {
         `${folder.dist_assets}css/vendor-pf4.css`
     );
 });
-mix.js(
-    './node_modules/jquery-slimscroll/jquery.slimscroll.js',
+
+mix.styles(
+    ['./node_modules/flatpickr/dist/flatpickr.css'],
+    `${folder.dist_assets}css/vendor-combined.css`
+).minify(`${folder.dist_assets}css/vendor-combined.css`);
+
+mix.scripts(
+    ['./node_modules/jquery-slimscroll/jquery.slimscroll.js'],
     `${folder.dist_assets}js/vendor-slimscroll.js`
 ).minify(`${folder.dist_assets}js/vendor-slimscroll.js`);
 
-mix.js(
-    './node_modules/datatables.net/js/jquery.dataTables.js',
+mix.scripts(
+    ['./node_modules/datatables.net/js/jquery.dataTables.js'],
     `${folder.dist_assets}js/vendor-jquery.dataTables.js`
 ).minify(`${folder.dist_assets}js/vendor-jquery.dataTables.js`);
 
+mix.scripts(
+    ['./node_modules/flatpickr/dist/flatpickr.js'],
+    `${folder.dist_assets}js/vendor-flatpickr.js`
+).minify(`${folder.dist_assets}js/vendor-flatpickr.js`);
+/*
+mix.js(
+    './node_modules/moment/dist/moment.js',
+    `${folder.dist_assets}js/vendor-moment.js`
+).minify(`${folder.dist_assets}js/vendor-moment.js`);
+*/
 mix.copyDirectory(
     `${folder.node_modules}@patternfly/patternfly/assets`,
     `${folder.dist_assets}css/assets`

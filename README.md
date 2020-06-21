@@ -39,3 +39,5 @@ Set your HTTP server root to the `public/` sub-directory.  Oe run `php artisan s
 ### Deploy as a Container
 
 ### Deploy to Kubernetes
+
+### Deploy to OpenShift

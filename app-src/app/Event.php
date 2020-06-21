@@ -31,4 +31,12 @@ class Event extends Model
    * @var array
    */
   protected $casts = [];
+
+  public function user() {
+    return $this->belongsTo('App\User', 'user_id');
+  }
+
+  public function workshop() {
+    return $this->belongsTo('App\Workshop', 'workshop_id');
+  }
 }

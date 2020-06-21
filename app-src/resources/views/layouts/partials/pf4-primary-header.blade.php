@@ -12,6 +12,7 @@
   <!-- PatternFly Styles -->
   <!-- Note: No other CSS files are needed regardless of what other JS packages located in patternfly/components that you decide to pull in -->
   <link rel="stylesheet" href="/assets/css/vendor-pf4.min.css" />
+  <link rel="stylesheet" href="/assets/css/vendor-combined.min.css" />
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="/assets/css/app.min.css" />

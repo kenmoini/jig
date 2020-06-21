@@ -330,36 +330,7 @@
     jQuery("#addAssetForm").on('reset', function(e) {
       jQuery(".asset_type_holder").removeClass('show');
     });
-    /*
-    jQuery("#addAssetForm").on('submit', function(e) {
-      switch (document.getElementById("asset_asset_type").value) {
-        case "cookie":
-          var asset_data = {
-            key: document.getElementById("asset_cookie_key").value,
-            default_value: document.getElementById("asset_cookie_default_value").value,
-            domain: document.getElementById("asset_cookie_domain").value,
-            path: document.getElementById("asset_cookie_path").value,
-            expiration: document.getElementById("asset_cookie_expiration").value,
-          };
-        break;
-        case "credentials":
-          var asset_data = {
-            title: document.getElementById("asset_credentials_title").value,
-            url: document.getElementById("asset_credentials_url").value,
-            username: document.getElementById("asset_credentials_username").value,
-            password: document.getElementById("asset_credentials_password").value,
-          };
-        break;
-        case "link":
-          var asset_data = {
-            title: document.getElementById("asset_link_title").value,
-            url: document.getElementById("asset_link_url").value,
-          };
-        break;
-      }
-      jQuery(this).append('<input type="hidden" name="asset_data" value="'+ JSON.stringify(asset_data) +'">');
-    });
-    */
+    
   });
 </script>
 @endsection
