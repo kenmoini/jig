@@ -72,7 +72,7 @@
 
                 <div class="links">
                     @auth
-                        <a href="{{ url('/admin/dashboard') }}">Dashboard</a>
+                        <a href="{{ route('panel.get.dashboard.index') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
