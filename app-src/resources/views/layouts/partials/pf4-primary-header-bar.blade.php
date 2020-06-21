@@ -8,7 +8,7 @@
       </button>
     </div>
     <a href="/" class="pf-c-page__header-brand-link">
-      <img class="pf-c-brand pf-u-mr-xl" src="{{"/assets/css/assets/images/pf_mini_logo_white.svg"}}" alt="PF logo" /> Workshop Worker
+      <img class="pf-c-brand pf-u-mr-xl" src="{{"/assets/css/assets/images/pf_mini_logo_white.svg"}}" alt="PF logo" /> Jig
     </a>
   </div>
   <div class="pf-c-page__header-tools">

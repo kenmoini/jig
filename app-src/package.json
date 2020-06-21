@@ -23,6 +23,7 @@
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.26.8",
         "sass-loader": "^8.0.2",
+        "slugify": "^1.4.0",
         "tempusdominus-bootstrap-4": "^5.1.2",
         "vue-template-compiler": "^2.6.11"
     },

@@ -8,10 +8,10 @@
 //@import '~bootstrap/scss/bootstrap';
 
 
-.collapse:not(.show), .pf-c-dropdown__menu {
+.collapse:not(.show), .pf-c-dropdown__menu, .modal:not(.show), #modalHolder:not(.show) {
   display: none;
 }
-.collapse.show {
+.collapse.show, .modal.show, #modalHolder.show {
   display:grid;
   overflow: hidden;
 }
