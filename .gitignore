@@ -1,5 +1,3 @@
-app-src/public/assets
-app-src/public/assets/*
 app-src/node_modules
 app-src/public/hot
 app-src/public/storage
