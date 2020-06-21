@@ -130,7 +130,8 @@ class WorkshopSeeder extends Seeder
       ];
 
       foreach ($data as $workshop) {
-        
+
+        echo 'Adding Workshop: ' . $workshop['name'] . "...\n";
         DB::table('workshops')->insert([
           'name' => $workshop['name'],
           'created_at' => Carbon::now()->toDateTimeString(),

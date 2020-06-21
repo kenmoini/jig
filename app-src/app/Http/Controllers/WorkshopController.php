@@ -157,4 +157,10 @@ class WorkshopController extends Controller
       Session::flash('message-success', 'Workshop successfully deleted.');
       return Redirect::route('panel.get.workshops.index');
     }
+
+
+    public function listAssets(Request $request) {
+      $workshop = Workshop::where('id', $request->input('id'))->with(['assets'])->first();
+      return response()->json($workshop->assets()->get());
+    }
 }

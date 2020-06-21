@@ -4,9 +4,24 @@
 
 @section('headerScripts')
 <style type="text/css" rel="stylesheet">
-.pf-c-form-control[readonly] {
-  background-color:inherit;
-}
+  .pf-c-form-control[readonly] {
+    background-color:inherit;
+  }
+  h1 {
+    font-weight:bold;
+    font-size:1rem;
+    margin-bottom:1rem;
+  }
+  #assetFactoryHolder .asset_group {
+    margin-bottom:1rem;
+    border-bottom:1px solid grey;
+    padding-bottom: 1rem;
+  }
+  .pf-c-button.pf-m-small {
+    --pf-c-button--FontSize: var(--pf-c-button--m-small--FontSize);
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
 </style>
 @endsection
 
@@ -94,6 +109,49 @@
         </div>
       </div>
     </div>
+      
+    <div class="pf-c-form__group pf-u-mb-sm">
+      <div class="pf-c-form__group-label">
+        <label class="pf-c-form__label" for="event_eid">
+          <span class="pf-c-form__label-text">Event ID</span>
+          <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
+        </label>
+      </div>
+      <div class="pf-c-form__group-control">
+        <input class="pf-c-form-control" type="text" id="event_eid" name="event_eid" required />
+      </div>
+    </div>
+      
+    <div class="pf-c-form__group pf-u-mb-sm">
+      <div class="pf-c-form__group-label">
+        <label class="pf-c-form__label" for="event_seat_count">
+          <span class="pf-c-form__label-text">Seat Count</span>
+          <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
+        </label>
+      </div>
+      <div class="pf-c-form__group-control">
+        <input class="pf-c-form-control" type="number" value="50" step="1" id="event_seat_count" name="event_seat_count" required />
+      </div>
+    </div>
+      
+    <div class="collapse" id="assetFactoryHolder">
+      <div class="pf-c-form__group pf-u-mb-sm">
+        <div class="pf-c-form__group-label">
+          <label class="pf-c-form__label" for="event_seat_count">
+            <span class="pf-c-form__label-text">Assets</span>
+          </label>
+        </div>
+        <div class="pf-c-form__group-control">
+          <div class="pf-c-card">
+            <div class="pf-c-card__body">
+            </div>
+            <div class="pf-c-card__footer">
+              <button class="pf-c-button pf-m-secondary pf-u-float-right" role="button">Add Asset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="pf-c-form__group pf-m-action">
       <div class="pf-c-form__actions">
@@ -113,18 +171,55 @@
 <script type="text/javascript" src="/assets/js/vendor-flatpickr.min.js"></script>
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    
-    /*
     jQuery("#createEventForm").on('change', "#event_workshop_id", function(e) {
       e.preventDefault();
-      jQuery("#eventDetailsHolder").removeClass('show');
-      jQuery("#eventDetailsHolder").addClass('show');
+      var workshop_id = this.value;
+      jQuery("#assetFactoryHolder").removeClass('show');
+      jQuery.ajax({method: "POST", data: { id: workshop_id }, url: "{{ route('panel.post.workshop.listAssets') }}", async: false, success: function(result){
+        console.log(result);
+        for (var key in result) {
+            // skip loop if the property is from prototype
+            if (!result.hasOwnProperty(key)) continue;
+
+            var obj = result[key];
+            var asset_data = JSON.parse(obj['asset_data']);
+            switch (obj['asset_type']) {
+              case "cookie":
+                jQuery("#assetFactoryHolder .pf-c-card__body").append('<div class="asset_group" id="event_asset-cookie-'+obj['slug']+'-holder"><h1>['+obj['asset_type'].charAt(0).toUpperCase() + obj['asset_type'].slice(1) +'] '+obj['name']+'<button class="pf-c-button pf-m-danger pf-m-small pf-u-float-right"><i class="pf-icon pf-icon-remove2"></i></button></h1>' +
+                '<div class="pf-c-form__group"><div class="pf-c-form__group-label"><label class="pf-c-form__label" for="event_asset-cookie-key-'+obj['slug']+'"><span class="pf-c-form__label-text">Key</span></label></div>' +
+                '<div class="pf-c-form__group-control"><input class="pf-c-form-control" type="text" id="event_asset-cookie-key-'+obj['slug']+'" name="event_asset-cookie-key-'+obj['slug']+'" value="'+asset_data['key']+'" /></div></div>' +
+                '<div class="pf-c-form__group"><div class="pf-c-form__group-label"><label class="pf-c-form__label" for="event_asset-cookie-value-'+obj['slug']+'"><span class="pf-c-form__label-text">Value</span></label></div>' +
+                '<div class="pf-c-form__group-control"><input class="pf-c-form-control" type="text" id="event_asset-cookie-value-'+obj['slug']+'" name="event_asset-cookie-value-'+obj['slug']+'" value="'+asset_data['default_value']+'" /></div></div>' +
+                '<input type="hidden" id="event_asset-cookie-domain-'+obj['slug']+'" name="event_asset-cookie-domain-'+obj['slug']+'" value="'+asset_data['domain']+'" />' +
+                '<input type="hidden" id="event_asset-cookie-path-'+obj['slug']+'" name="event_asset-cookie-path-'+obj['slug']+'" value="'+asset_data['path']+'" />' +
+                '<input type="hidden" id="event_asset-cookie-expiration-'+obj['slug']+'" name="event_asset-cookie-expiration-'+obj['slug']+'" value="'+asset_data['expiration']+'" />' +
+                '<input type="hidden" id="event_asset-cookie-name-'+obj['slug']+'" name="event_asset-cookie-name-'+obj['slug']+'" value="'+obj['name']+'" />' +
+                '</div>');
+
+                for (var prop in obj) {
+                    // skip loop if the property is from prototype
+                    if (!obj.hasOwnProperty(prop)) continue;
+
+                    // your code
+                    console.log(prop + " = " + obj[prop]);
+                }
+              break;
+            }
+        }
+        //jQuery("#assetFactoryHolder .pf-c-card__body").text(result);
+      }});
+      jQuery("#assetFactoryHolder").addClass('show');
+
+      jQuery(".asset_group").on("click", ".pf-m-danger", function(e) {
+        e.preventDefault();
+        jQuery(this).parent().parent().remove();
+      });
     });
 
     jQuery("#addAssetForm").on('reset', function(e) {
       jQuery("#eventDetailsHolder").removeClass('show');
     });
-    */
+
     flatpickr("#event_start_date", {
       enableTime: true,
       dateFormat: "Y-m-d H:i:S",

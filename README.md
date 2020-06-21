@@ -29,6 +29,7 @@ cp .env.example .env
 touch db.sqlite
 php artisan key:generate
 php artisan migrate
+composer dump-autoload
 php artisan db:seed --class=WorkshopSeeder
 php artisan db:seed --class=AssetSeeder
 ```

@@ -52572,6 +52572,12 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+jQuery.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -52639,8 +52645,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/kemo/Development/jig/app-src/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/kemo/Development/jig/app-src/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/kenmoini/Development/jig/app-src/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/kenmoini/Development/jig/app-src/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
