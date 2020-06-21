@@ -82,7 +82,7 @@ class WorkshopController extends Controller
      */
     public function show($id)
     {
-      $workshop = Workshop::find($id)->first();
+      $workshop = Workshop::where('id', $id)->with(['user', 'assets'])->first();
       return view('workshops.show')->with(['workshop' => $workshop]);
     }
 
@@ -94,7 +94,7 @@ class WorkshopController extends Controller
      */
     public function edit($id)
     {
-      $workshop = Workshop::find($id)->first();
+      $workshop = Workshop::where('id', $id)->first();
       return view('workshops.edit')->with(['workshop' => $workshop]);
     }
 

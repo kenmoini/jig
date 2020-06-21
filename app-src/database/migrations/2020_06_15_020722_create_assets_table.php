@@ -24,8 +24,8 @@ class CreateAssetsTable extends Migration
             $table->longText('asset_data'); 
             /* eg, 
               { 
-                ['key' => 'domain', 'value' => 'fiercesw.network', 'path' => '/workshops/secure-software-factory/', 'expiration' => 7],
-                ['title' => 'GitLab Server', 'url' => 'https://gitlab.fiercesw.network/', 'username' => ', 'password' => $SEAT_DEFAULT_PASSWORD],
+                ['key' => 'domain', 'default_value' => 'fiercesw.network', 'path' => '/workshops/secure-software-factory/', 'expiration' => 7],
+                ['title' => 'GitLab Server', 'url' => 'https://gitlab.[[domain]]/', 'username' => 'student[[seat_number]]', 'password' => $SEAT_DEFAULT_PASSWORD],
                 ['title' => 'Ansible Tower GUI', 'url' => 'https://ansible-tower.[[seat_number]].[[workshop_id]].[[domain]]', ], // Replace cookie vars on front-end
                 ['title' => 'Workshop Slides', 'url' => 'https://slides.redhat.com/#1'],
                 ...

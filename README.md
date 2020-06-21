@@ -29,6 +29,8 @@ cp .env.example .env
 touch db.sqlite
 php artisan key:generate
 php artisan migrate
+php artisan db:seed --class=WorkshopSeeder
+php artisan db:seed --class=AssetSeeder
 ```
 
 Set your HTTP server root to the `public/` sub-directory.  Oe run `php artisan serve`

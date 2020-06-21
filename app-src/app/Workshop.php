@@ -34,4 +34,31 @@ class Workshop extends Model
   public function user() {
     return $this->belongsTo('App\User', 'user_id');
   }
+
+  public function assets() {
+    return $this->hasMany('App\Asset', 'workshop_id');
+  }
+
+  public function getBaseDomainAttribute() {
+    $url = parse_url($this->curriculum_endpoint);
+    return $url['host'];
+  }
+
+  public function getWorkshopPathAttribute() {
+    $url = parse_url($this->curriculum_endpoint);
+    $str = str_replace($url['scheme'] . '://', '', $this->curriculum_endpoint);
+    $str = str_replace($url['host'], '', $str);
+    if (substr($str, -1) === "/") {
+      $str = $str . $this->curriculum_slug;
+    }
+    else {
+      $str = $str . '/' . $this->curriculum_slug;
+    }
+    if (substr($str, -1) === "/") {
+      return $str;
+    }
+    else {
+      return $str . '/';
+    }
+  }
 }

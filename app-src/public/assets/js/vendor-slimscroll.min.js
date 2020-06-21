@@ -578,7 +578,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kenmoini/Development/jig/app-src/node_modules/jquery-slimscroll/jquery.slimscroll.js */"./node_modules/jquery-slimscroll/jquery.slimscroll.js");
+module.exports = __webpack_require__(/*! /home/kemo/Development/jig/app-src/node_modules/jquery-slimscroll/jquery.slimscroll.js */"./node_modules/jquery-slimscroll/jquery.slimscroll.js");
 
 
 /***/ })

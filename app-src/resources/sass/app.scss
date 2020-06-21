@@ -8,10 +8,10 @@
 //@import '~bootstrap/scss/bootstrap';
 
 
-#mainSideNav.collapse:not(.show), #mainSideNav .pf-c-nav__subnav.collapse:not(.show), .pf-c-dropdown__menu {
+.collapse:not(.show), .pf-c-dropdown__menu {
   display: none;
 }
-#mainSideNav.collapse.show, #mainSideNav .pf-c-nav__subnav.collapse.show {
+.collapse.show {
   display:grid;
   overflow: hidden;
 }
@@ -28,4 +28,9 @@
 }
 .pf-c-alert {
   margin-bottom:2rem;
+}
+span.greyCode {
+  background-color: lightgrey;
+  font-family: monospace;
+  padding:2px;
 }

@@ -33,6 +33,11 @@ Route::prefix('panel')->middleware(['verified'])->group(function() {
   Route::post('workshops/edit/{id}', 'WorkshopController@update')->name('panel.post.workshops.update');
   Route::post('workshops/destroy/{id}', 'WorkshopController@destroy')->name('panel.post.workshops.destroy');
 
+  // Assets
+  Route::post('assets/create', 'AssetController@store')->name('panel.post.assets.store');
+  Route::post('assets/destroy/{id}', 'AssetController@destroy')->name('panel.post.assets.destroy');
+
+
   // Events
   Route::get('events', 'EventController@index')->name('panel.get.events.index');
 
