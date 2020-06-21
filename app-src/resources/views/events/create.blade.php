@@ -137,7 +137,7 @@
     <div class="collapse" id="assetFactoryHolder">
       <div class="pf-c-form__group pf-u-mb-sm">
         <div class="pf-c-form__group-label">
-          <label class="pf-c-form__label" for="event_seat_count">
+          <label class="pf-c-form__label">
             <span class="pf-c-form__label-text">Assets</span>
           </label>
         </div>
@@ -177,6 +177,7 @@
       jQuery("#assetFactoryHolder").removeClass('show');
       jQuery.ajax({method: "POST", data: { id: workshop_id }, url: "{{ route('panel.post.workshop.listAssets') }}", async: false, success: function(result){
         console.log(result);
+        jQuery("#assetFactoryHolder .pf-c-card__body .asset_group").remove();
         for (var key in result) {
             // skip loop if the property is from prototype
             if (!result.hasOwnProperty(key)) continue;
@@ -185,15 +186,15 @@
             var asset_data = JSON.parse(obj['asset_data']);
             switch (obj['asset_type']) {
               case "cookie":
-                jQuery("#assetFactoryHolder .pf-c-card__body").append('<div class="asset_group" id="event_asset-cookie-'+obj['slug']+'-holder"><h1>['+obj['asset_type'].charAt(0).toUpperCase() + obj['asset_type'].slice(1) +'] '+obj['name']+'<button class="pf-c-button pf-m-danger pf-m-small pf-u-float-right"><i class="pf-icon pf-icon-remove2"></i></button></h1>' +
-                '<div class="pf-c-form__group"><div class="pf-c-form__group-label"><label class="pf-c-form__label" for="event_asset-cookie-key-'+obj['slug']+'"><span class="pf-c-form__label-text">Key</span></label></div>' +
-                '<div class="pf-c-form__group-control"><input class="pf-c-form-control" type="text" id="event_asset-cookie-key-'+obj['slug']+'" name="event_asset-cookie-key-'+obj['slug']+'" value="'+asset_data['key']+'" /></div></div>' +
-                '<div class="pf-c-form__group"><div class="pf-c-form__group-label"><label class="pf-c-form__label" for="event_asset-cookie-value-'+obj['slug']+'"><span class="pf-c-form__label-text">Value</span></label></div>' +
-                '<div class="pf-c-form__group-control"><input class="pf-c-form-control" type="text" id="event_asset-cookie-value-'+obj['slug']+'" name="event_asset-cookie-value-'+obj['slug']+'" value="'+asset_data['default_value']+'" /></div></div>' +
-                '<input type="hidden" id="event_asset-cookie-domain-'+obj['slug']+'" name="event_asset-cookie-domain-'+obj['slug']+'" value="'+asset_data['domain']+'" />' +
-                '<input type="hidden" id="event_asset-cookie-path-'+obj['slug']+'" name="event_asset-cookie-path-'+obj['slug']+'" value="'+asset_data['path']+'" />' +
-                '<input type="hidden" id="event_asset-cookie-expiration-'+obj['slug']+'" name="event_asset-cookie-expiration-'+obj['slug']+'" value="'+asset_data['expiration']+'" />' +
-                '<input type="hidden" id="event_asset-cookie-name-'+obj['slug']+'" name="event_asset-cookie-name-'+obj['slug']+'" value="'+obj['name']+'" />' +
+                jQuery("#assetFactoryHolder .pf-c-card__body").append('<div class="asset_group" id="event-asset_cookie_'+obj['slug']+'-holder"><h1>['+obj['asset_type'].charAt(0).toUpperCase() + obj['asset_type'].slice(1) +'] '+obj['name']+'<button class="pf-c-button pf-m-danger pf-m-small pf-u-float-right"><i class="pf-icon pf-icon-remove2"></i></button></h1>' +
+                '<div class="pf-c-form__group"><div class="pf-c-form__group-label"><label class="pf-c-form__label" for="event-asset_cookie-key_'+obj['slug']+'"><span class="pf-c-form__label-text">Key</span></label></div>' +
+                '<div class="pf-c-form__group-control"><input class="pf-c-form-control" type="text" id="event-asset_cookie-key_'+obj['slug']+'" name="event-asset_cookie-key_'+obj['slug']+'" value="'+asset_data['key']+'" /></div></div>' +
+                '<div class="pf-c-form__group"><div class="pf-c-form__group-label"><label class="pf-c-form__label" for="event-asset_cookie-value_'+obj['slug']+'"><span class="pf-c-form__label-text">Value</span></label></div>' +
+                '<div class="pf-c-form__group-control"><input class="pf-c-form-control" type="text" id="event-asset_cookie-value_'+obj['slug']+'" name="event-asset_cookie-value_'+obj['slug']+'" value="'+asset_data['default_value']+'" /></div></div>' +
+                '<input type="hidden" id="event-asset_cookie-domain_'+obj['slug']+'" name="event-asset_cookie-domain_'+obj['slug']+'" value="'+asset_data['domain']+'" />' +
+                '<input type="hidden" id="event-asset_cookie-path_'+obj['slug']+'" name="event-asset_cookie-path_'+obj['slug']+'" value="'+asset_data['path']+'" />' +
+                '<input type="hidden" id="event-asset_cookie-expiration_'+obj['slug']+'" name="event-asset_cookie-expiration_'+obj['slug']+'" value="'+asset_data['expiration']+'" />' +
+                '<input type="hidden" id="event-asset_cookie-name_'+obj['slug']+'" name="event-asset_cookie-name_'+obj['slug']+'" value="'+obj['name']+'" />' +
                 '</div>');
 
                 for (var prop in obj) {
@@ -203,6 +204,10 @@
                     // your code
                     console.log(prop + " = " + obj[prop]);
                 }
+              break;
+              case "credentials":
+              break;
+              case "link":
               break;
             }
         }
@@ -216,8 +221,9 @@
       });
     });
 
-    jQuery("#addAssetForm").on('reset', function(e) {
-      jQuery("#eventDetailsHolder").removeClass('show');
+    jQuery("#createEventForm").on('reset', function(e) {
+      jQuery("#assetFactoryHolder .pf-c-card__body .asset_group").remove();
+      jQuery("#assetFactoryHolder").removeClass('show');
     });
 
     flatpickr("#event_start_date", {
