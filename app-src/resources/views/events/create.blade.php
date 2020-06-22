@@ -418,7 +418,7 @@
                 if (!obj.hasOwnProperty(prop)) continue;
 
                 // your code
-                console.log(prop + " = " + obj[prop]);
+                //console.log(prop + " = " + obj[prop]);
             }
         }
         //jQuery("#assetFactoryHolder .pf-c-card__body").text(result);
