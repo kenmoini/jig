@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Redirect;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -47,7 +51,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = User::where('id', $id)->first();
+      return view('administration.users.show')->with(['user' => $user]);
     }
 
     /**
@@ -58,7 +63,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+      $user = User::where('id', $id)->first();
+      return view('administration.users.edit')->with(['user' => $user]);
     }
 
     /**
@@ -70,7 +76,43 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      // validate
+      // read more on validation at http://laravel.com/docs/validation
+      if (!empty($request->input('password'))) {
+        $rules = array(
+          'name'       => 'required|string|max:255',
+          //'email'       => '|string|email|max:255|unique:users',
+          'password'       => 'required|string|min:8|confirmed',
+        );
+      }
+      else {
+        $rules = array(
+          'name'       => 'required|string|max:255',
+          //'email'       => 'required|string|email|max:255|unique:users',
+        );
+      }
+      $validator = Validator::make($request->all(), $rules);
+
+      // process the login
+      if ($validator->fails()) {
+          return Redirect::route('panel.get.users.edit', $id)
+              ->withErrors($validator)
+              ->withInput();
+      } else {
+          // store
+          $user = User::find($id);
+          $user->name = $request->input('name');
+          //$user->email = $request->input('email');
+          
+          if (!empty($request->input('password'))) {
+            $user->password = Hash::make($request->input('password'));
+          }
+          $user->save();
+
+          // redirect
+          Session::flash('message-success', 'Successfully updated user!');
+          return Redirect::route('panel.get.users.index');
+      }
     }
 
     /**

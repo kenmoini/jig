@@ -18,7 +18,7 @@ class CreateInteractionsTable extends Migration
             $table->string('activity_type'); // login, workshopInit (passing of proper workshop EID and data), pageLoad, click, surveySubmit, etc
             $table->bigInteger('actor_id')->unsigned(); // the student_name.id
             $table->string('actor_type'); // student, user, etc
-            $table->text('activity_data'); // ['initiating_page' => 'inital/login/url.html'] / ['event_id' => 420] / ['pageURL' => 'loaded/page.html'], etc
+            $table->text('activity_data'); // ['initiating_page' => 'inital/login/url.html'] / ['event_id' => 420, seat_number = 4] / ['pageURL' => 'loaded/page.html'], etc
             $table->text('user_agent');
             $table->text('actor_ip');
             $table->timestamps();

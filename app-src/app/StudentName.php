@@ -31,4 +31,12 @@ class StudentName extends Model
    * @var array
    */
   protected $casts = [];
+
+  public function seatedEvents() {
+    return $this->hasMany('App\Attendee', 'student_name_id');
+  }
+
+  public function student() {
+    return $this->belongsTo('App\Student', 'student_id');
+  }
 }

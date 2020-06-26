@@ -60,6 +60,9 @@ Route::prefix('panel')->middleware(['verified'])->group(function() {
 
     // |_ Users
     Route::get('users', 'UserController@index')->name('panel.get.users.index');
+    Route::get('users/edit/{id}', 'UserController@edit')->name('panel.get.users.edit');
+    Route::post('users/edit/{id}', 'UserController@update')->name('panel.post.users.update');
+    Route::get('users/show/{id}', 'UserController@show')->name('panel.get.users.show');
 
     // |_ Roles
     Route::get('roles', 'RoleController@index')->name('panel.get.roles.index');

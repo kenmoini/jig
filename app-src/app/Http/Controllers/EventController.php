@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Redirect;
+use App\Attendee;
 use App\Event;
 use App\Workshop;
 use Illuminate\Http\Request;
@@ -136,6 +137,12 @@ class EventController extends Controller
           }
           $event->effective_asset_data = json_encode($effective_asset_data);
           $event->save();
+          
+
+          // Create the empty attendee seats..
+          for($s=0; $s<$event->seat_count; $s++) {
+            $attendee = Attendee::create(['event_id' => $event->id, 'seat_number' => $s, 'seat_state' => 0]);
+          }
 
           // redirect
           Session::flash('message', 'Successfully created event!');
@@ -151,7 +158,9 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
+      $event = Event::where('id', $id)->first();
+      $attendees = Attendee::where(['event_id' => $event->id])->get();
+      return view('events.show')->with(['event' => $event, 'attendees' => $attendees]);
     }
 
     /**

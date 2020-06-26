@@ -31,6 +31,7 @@ class Event extends Model
    * @var array
    */
   protected $casts = [];
+  protected $dates = ['start_time', 'end_time'];
 
   public function user() {
     return $this->belongsTo('App\User', 'user_id');

@@ -55,9 +55,9 @@
       <tr role="row">
         <td role="cell" data-label="Workshop name">{{ $user->name }}</td>
         <td role="cell" data-label="Email">{{ $user->email }}</td>
-        <td role="cell" data-label="Last Logged In"></td>
-        <td role="cell" data-label="Created">{{ $user->created_at->format('d/m/Y') }}</td>
-        <td role="cell" data-label="Actions"><a href="#" class="pf-c-button">Edit</a><a href="#" class="pf-c-button">View</a></td>
+        <td role="cell" data-label="Last Logged In" title="{{ $user->last_login->created_at->format('m/d/Y @ g:iA') }}">{{ $user->last_login->created_at->format('m/d/Y') }}</td>
+        <td role="cell" data-label="Created" title="{{ $user->created_at->format('m/d/Y @ g:iA') }}">{{ $user->created_at->format('m/d/Y') }}</td>
+        <td role="cell" data-label="Actions"><a href="{{ route('panel.get.users.edit', $user->id) }}" class="pf-c-button">Edit</a><a href="{{ route('panel.get.users.show', $user->id) }}" class="pf-c-button">View</a></td>
       </tr>
       @endforeach
     @else

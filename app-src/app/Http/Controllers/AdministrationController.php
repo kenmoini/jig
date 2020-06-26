@@ -56,7 +56,7 @@ class AdministrationController extends Controller
      */
     public function edit($id)
     {
-        //
+      //
     }
 
     /**

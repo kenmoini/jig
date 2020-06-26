@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Activity;
 use App\Attendee;
+use App\Event;
 use App\Student;
 use App\StudentName;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StudentLoginController extends Controller
 {
@@ -56,6 +58,8 @@ class StudentLoginController extends Controller
     // Handle "Login" Function
     public function handleLogin(Request $request) {
 
+      // Call this API @ /api/v1/student-login
+
       // validate
       // read more on validation at http://laravel.com/docs/validation
       $rules = array(
@@ -90,8 +94,8 @@ class StudentLoginController extends Controller
         $logInAction->activity_type = "login";
         $logInAction->actor_type = "student";
         $logInAction->actor_id = $student_name->id;
-        $logInAction->activity_data = ['initiating_url' => $request->input('initiating_url')];
-        $logInAction->user_agent = $request->header('User-Agent');
+        $logInAction->activity_data = json_encode(['initiating_url' => $request->input('initiating_url')]);
+        $logInAction->user_agent = json_encode($request->header('User-Agent'));
         $logInAction->actor_ip = $request->ip();
         $logInAction->save();
 
@@ -110,6 +114,9 @@ class StudentLoginController extends Controller
 
     // Handle Workshop Event ID Matching 
     public function handleEventID(Request $request) {
+
+      // Access this API endpoint via /api/v1/access-workshop-event/
+
       // validate
       // read more on validation at http://laravel.com/docs/validation
       $rules = array(
@@ -134,26 +141,18 @@ class StudentLoginController extends Controller
 
         if ($event) {
 
-          // Create Attendee
-          $attendee = Attendee::firstOrCreate([ 'event_id' => $event->id, 'student_name_id' => $request->input('student_name_id') ]);
-
-          // Find seat number in attendee stack
-          $allCurrentAttendees = Attendee::where('event_id', $event->id)->orderBy('created_at', 'asc')->get();
-          $seat_number = 0;
-          foreach($allCurrentAttendees as $aTT) {
-            if ($aTT->student_name_id === $request->input('student_name_id')) {
-              break;
-            }
-            else {
-              $seat_number++;
-            }
-          }
+          // Find the first available seat and claim
+          $attendee = Attendee::where(['seat_state' => 0, 'event_id' => $event->id])->orderBy('seat_number', 'asc')->first();
+          $attendee->student_name_id = $request->input('student_name_id');
+          $attendee->seat_state = 1;
+          $attendee->save();
 
           // Load event assets from DB
-          $assets = $event->effective_asset_data;
+          $assets = json_decode($event->effective_asset_data);
+          $assets['cookies']['seat_number-cookie'] = ['cookie-key' => 'seat_number', 'cookie-value' => $attendee->seat_number, 'cookie-domain' => $assets['cookies'][0]['cookie-domain'], 'cookie-path' => $assets['cookies'][0]['cookie-path'], 'cookie-expiration' => $assets['cookies'][0]['cookie-expiration'], 'cookie-name' => 'Student Seat Number'];
           
           // Process variables in assets
-          // $processed_assets = $this->processAssetVariables($assets); //nope nvm, do it client side with cookies and HTML data lol
+          //nope nvm, do it client side with cookies and HTML data lol
 
           // Log the Workshop EID Activity workshopInit
           $logInAction = new Activity;
@@ -172,7 +171,9 @@ class StudentLoginController extends Controller
             'message' => 'Event found!  Workshop initializing...',
             'data' => [
               'event' => $event,
-              'student_seat_number' => $seat_number,
+              'attendee' => $attendee,
+              'assets' => $assets,
+              'student_seat_number' => $attendee->seat_number,
             ]
           ]);
         }

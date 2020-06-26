@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Activity;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,4 +37,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getLastLoginAttribute() {
+      return Activity::where(['activity_type' => 'login', 'actor_id' => $this->id])->orderBy('created_at', 'desc')->first();
+    }
 }

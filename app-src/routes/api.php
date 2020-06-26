@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('v1')->middleware(['api.checkOrigin'])->group(function() {
+  Route::post('student-login', 'API\StudentLoginController@handleLogin');
+  Route::post('access-workshop-event', 'API\StudentLoginController@handleEventID');
+});
+
+
+/*
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+*/

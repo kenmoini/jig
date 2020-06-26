@@ -30,8 +30,8 @@ touch db.sqlite
 php artisan key:generate
 php artisan migrate
 composer dump-autoload
-php artisan db:seed --class=WorkshopSeeder
-php artisan db:seed --class=AssetSeeder
+php artisan db:seed --class=AdminUserSeeder #optional, or create a user before seeding
+php artisan db:seed
 ```
 
 Set your HTTP server root to the `public/` sub-directory.  Oe run `php artisan serve`

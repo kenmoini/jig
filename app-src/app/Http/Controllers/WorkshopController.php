@@ -119,7 +119,7 @@ class WorkshopController extends Controller
 
       // process the login
       if ($validator->fails()) {
-          return Redirect::route('panel.get.workshops.create')
+          return Redirect::route('panel.get.workshops.edit', $id)
               ->withErrors($validator)
               ->withInput();
       } else {
