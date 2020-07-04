@@ -22,4 +22,18 @@ class Attendee extends Model
   public function event() {
     return $this->belongsTo('App\Event', 'event_id');
   }
+
+  public function getCurrentSeatStateAttribute() {
+    switch ($this->seat_state) {
+      case "0":
+        return "Available";
+      break;
+      case "1":
+        return "Claimed";
+      break;
+      case "2":
+        return "Tainted";
+      break;
+    }
+  }
 }

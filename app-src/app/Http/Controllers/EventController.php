@@ -140,7 +140,7 @@ class EventController extends Controller
           
 
           // Create the empty attendee seats..
-          for($s=0; $s<$event->seat_count; $s++) {
+          for($s=0; $s<=$event->seat_count; $s++) {
             $attendee = Attendee::create(['event_id' => $event->id, 'seat_number' => $s, 'seat_state' => 0]);
           }
 

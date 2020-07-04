@@ -31,7 +31,7 @@ class StudentLoginController extends Controller
           'status' => 'failed',
           'code' => 'validation-failed',
           'message' => 'Validation failed'
-        ]);
+        ], 400);
 
       } else {
 
@@ -49,7 +49,7 @@ class StudentLoginController extends Controller
 
         return response()->json([
           'status' => 'success',
-        ]);
+        ], 200);
 
       }
 
@@ -75,7 +75,7 @@ class StudentLoginController extends Controller
           'status' => 'failed',
           'code' => 'validation-failed',
           'message' => 'Validation failed'
-        ]);
+        ], 400);
       } else {
 
         // Validated, create/locate student object
@@ -108,7 +108,7 @@ class StudentLoginController extends Controller
             'student_email' => $student->email,
             'student_name' => $student_name->name,
           ]
-        ]);
+        ], 200);
       }
     }
 
@@ -132,7 +132,7 @@ class StudentLoginController extends Controller
           'status' => 'failed',
           'code' => 'validation-failed',
           'message' => 'Validation failed'
-        ]);
+        ], 400);
       } else {
 
         // Look up EID
@@ -175,7 +175,7 @@ class StudentLoginController extends Controller
               'assets' => $assets,
               'student_seat_number' => $attendee->seat_number,
             ]
-          ]);
+          ], 200);
         }
         else {
 
@@ -184,7 +184,7 @@ class StudentLoginController extends Controller
             'status' => 'failed',
             'code' => 'invalid-event-id',
             'message' => 'Invalid Event ID'
-          ]);
+          ], 204);
 
         }
       }

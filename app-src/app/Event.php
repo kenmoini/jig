@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -39,5 +40,31 @@ class Event extends Model
 
   public function workshop() {
     return $this->belongsTo('App\Workshop', 'workshop_id');
+  }
+  public function getStatusClassAttribute() {
+    $now = Carbon::now();
+
+    if ($this->start_time < $now) {
+      if ($this->end_time < $now) {
+        return 'prev';
+      }
+      return 'ongoing';
+    }
+    else {
+      return 'upcoming';
+    }
+  }
+  public function getStatusDescriptionAttribute() {
+    $now = Carbon::now();
+
+    if ($this->start_time < $now) {
+      if ($this->end_time < $now) {
+        return 'Expired/Previous Event';
+      }
+      return 'Currently Ongoing Event';
+    }
+    else {
+      return 'Upcoming Future Event';
+    }
   }
 }

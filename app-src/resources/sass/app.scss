@@ -34,3 +34,33 @@ span.greyCode {
   font-family: monospace;
   padding:2px;
 }
+.paginate_button {
+  padding: 2px 4px;
+  border: 1px solid #000;
+  margin: 0px 7px 4px 0;
+  background: #FFF;
+}
+.paginate_button.current {
+  border: none;
+  background: transparent;
+  font-weight: bold;
+}
+.dataTables_info {
+  margin: 1rem 0;
+}
+span.eventStatus {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 1px 4px 1px 0;
+}
+span.eventStatus.prev {
+  background-color:#bb4d4d;
+}
+span.eventStatus.upcoming {
+  background-color:#0066cc;
+}
+span.eventStatus.ongoing {
+  background-color:#00cccc;
+}

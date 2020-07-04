@@ -24,12 +24,12 @@
   </div>
   <div class="pf-l-gallery__item">
     <div class="pf-c-card">
-      <div class="pf-c-card__body"><h1 class="pf-u-mr-xl pf-u-float-left">{{ \App\Event::all()->count() }} Previous Events</h1></div>
+      <div class="pf-c-card__body"><h1 class="pf-u-mr-xl pf-u-float-left">{{ $previousEvents }} Previous Events</h1></div>
     </div>
   </div>
   <div class="pf-l-gallery__item">
     <div class="pf-c-card">
-      <div class="pf-c-card__body"><h1 class="pf-u-mr-xl pf-u-float-left">{{ \App\Event::all()->count() }} Upcoming Events</h1></div>
+      <div class="pf-c-card__body"><h1 class="pf-u-mr-xl pf-u-float-left">{{ $upcommingEvents }} Upcoming Events</h1></div>
     </div>
   </div>
   <div class="pf-l-gallery__item">

@@ -108,10 +108,10 @@
     @if(count($events))
       @foreach($events as $event)
       <tr role="row">
-        <td role="cell" data-label="Event Name">{{ $event->event_title }}</td>
+        <td role="cell" title="{{ $event->status_description }}" data-label="Event Name" data-order="{{ $event->event_title }}" data-search="{{ $event->event_title }}"><span class="eventStatus {{ $event->status_class }}"></span>{{ $event->event_title }}</td>
         <td role="cell" data-label="Event ID">{{ $event->event_id }}</td>
         <td role="cell" data-label="Created by">{{ $event->user()->first()->name }}</td>
-        <td role="cell" data-label="Event Start">{{ $event->start_time }}</td>
+        <td role="cell" data-label="Event Start" data-order="{{ $event->start_time->timestamp }}">{{ $event->start_time->format('M j, Y @ H:i') }}</td>
         <td role="cell" data-label="Event Workshop">{{ $event->workshop()->first()->name }}</td>
         <td role="cell" data-label="Actions">
           <a href="{{ route('panel.get.events.edit', $event->id) }}" class="pf-c-button pf-m-primary pf-u-mr-md">Edit</a><a href="{{ route('panel.get.events.show', $event->id) }}" class="pf-c-button pf-m-secondary pf-u-mr-md">View</a>

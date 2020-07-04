@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +14,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $events = Event::all();
+        $upcommingCount = $prevCount = 0;
+        $nowTime = \Carbon\Carbon::now();
+        foreach ($events as $event) {
+          if ($event->start_time > $nowTime) {
+            $upcommingCount++;
+          }
+          else {
+            $prevCount++;
+          }
+        }
+        return view('dashboard.index')->with(['previousEvents' => $prevCount, 'upcommingEvents' => $upcommingCount]);
     }
 
     /**
