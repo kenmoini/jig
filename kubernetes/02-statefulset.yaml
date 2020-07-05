@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jig
+  namespace: jig-workshop-worker
+spec:
+  selector:
+    matchLabels:
+      app: jig # has to match .spec.template.metadata.labels
+  serviceName: "jig"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jig # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: jig
+          image: kenmoini/jig:952b309c52f4876da9ee823ff27de51c7066d306
+          ports:
+            - containerPort: 8080
+              name: web
+          volumeMounts:
+            - name: db
+              mountPath: /var/www/html/local_db
+  volumeClaimTemplates:
+    - metadata:
+        name: db
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

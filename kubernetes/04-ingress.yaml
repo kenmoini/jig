@@ -1,0 +1,22 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: jig
+  namespace: jig-workshop-worker
+  labels:
+    app: jig-workshop-worker
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - hosts:
+        - jig.polyglot.academy
+      secretName: site-jig-tls
+  rules:
+    - host: jig.polyglot.academy
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jig
+              servicePort: 8080
