@@ -39,6 +39,24 @@ Set your HTTP server root to the `public/` sub-directory.  Oe run `php artisan s
 
 ### Deploy as a Container
 
+The included Dockerfile builds in a Red Hat Universal Basic Image that includes Apache, PHP, and NodeJS.
+
+You can build the container locally:
+
+```bash
+podman build -t jig .
+podman run -p 8080:8080 jig
+```
+
+Alternatively, you could also just use the pre-build image:
+
+```bash
+podman pull kenmoini/jig:latest
+podman run -p 8080:8080 jig
+```
+
+Navigate to `http://localhost:8080` to view the site.
+
 ### Deploy to Kubernetes
 
 ### Deploy to OpenShift
