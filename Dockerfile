@@ -37,7 +37,7 @@ COPY init-cmd.sh /var/www/html/init-cmd.sh
 # Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:0 /var/www/ && chmod -R ug+rwx /var/www/ && \
     chown -R 1001:0 ${APP_ROOT} && chmod -R ug+rwx ${APP_ROOT} && \
-    /usr/libexec/container-setup && rpm-file-permissions
+    rpm-file-permissions
 
 USER 1001
 
