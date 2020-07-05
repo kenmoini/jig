@@ -19,7 +19,7 @@ spec:
       containers:
         - name: jig
           imagePullPolicy: Always
-          image: kenmoini/jig:7a15dbe3bd8f78c096f906929d7afc49e6db336c
+          image: kenmoini/jig:95a03fe38f1d24e5b9e4e6fbe745537ba1898810
           env:
             - name: DB_CONNECTION
               value: mysql
@@ -45,13 +45,15 @@ spec:
               value: "false"
             - name: GENERATE_ENV_KEY
               value: "false"
+            - name: COPY_ENV_FILE_FROM_CONFIGMAP
+              value: "true"
           ports:
             - containerPort: 8080
               name: web
           volumeMounts:
             - name: jig-env
-              mountPath: "/var/www/html"
-              readOnly: false
+              mountPath: "/var/www/data"
+              readOnly: true
       volumes:
         # You set volumes at the Pod level, then mount them into containers inside that Pod
         - name: jig-env

@@ -4,6 +4,10 @@ if [ $COPY_ENV_FILE = "true" ]; then
     cp .env.example .env
 fi
 
+if [ $COPY_ENV_FILE_FROM_CONFIGMAP = "true" ]; then
+    cp /var/html/data/.env .env
+fi
+
 if [ $GENERATE_SQLITE_DB = "true" ]; then
     touch /var/www/html/local_db/db.sqlite
     sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/html/local_db/db.sqlite,g" .env

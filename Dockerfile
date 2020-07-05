@@ -12,7 +12,8 @@ ENV COPY_ENV_FILE=true \
     GENERATE_SQLITE_DB=true \
     MIGRATE_DATABASE=true \
     SEED_INITIAL_ADMIN=true \
-    SEED_DATABASE=true
+    SEED_DATABASE=true \
+    COPY_ENV_FILE_FROM_CONFIGMAP=false
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
@@ -35,7 +36,8 @@ RUN npm install \
  && npm run dev
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
-RUN chown -R 1001:0 /var/www/ && chmod -R ug+rwx /var/www/ && \
+RUN mkdir /var/www/data && \
+    chown -R 1001:0 /var/www/ && chmod -R ug+rwx /var/www/ && \
     chown -R 1001:0 ${APP_ROOT} && chmod -R ug+rwx ${APP_ROOT} && \
     rpm-file-permissions
 
