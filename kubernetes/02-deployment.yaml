@@ -19,7 +19,7 @@ spec:
       containers:
         - name: jig
           imagePullPolicy: Always
-          image: kenmoini/jig:06619c49cec4565bf7a78d303ca8c02c2eb68de4
+          image: kenmoini/jig:latest
           env:
             - name: DB_CONNECTION
               value: mysql
@@ -35,6 +35,30 @@ spec:
               value: sup3rS3cr3t
             - name: GENERATE_SQLITE_DB
               value: "false"
+            - name: MIGRATE_DATABASE
+              value: "false"
+            - name: SEED_INITIAL_ADMIN
+              value: "false"
+            - name: SEED_DATABASE
+              value: "false"
+            - name: COPY_ENV_FILE
+              value: "false"
+            - name: GENERATE_ENV_KEY
+              value: "false"
           ports:
             - containerPort: 8080
               name: web
+          volumeMounts:
+            - name: jig-env
+              mountPath: "/var/www/html"
+              readOnly: false
+      volumes:
+        # You set volumes at the Pod level, then mount them into containers inside that Pod
+        - name: jig-env
+          configMap:
+            # Provide the name of the ConfigMap you want to mount.
+            name: jig-env
+            # An array of keys from the ConfigMap to create as files
+            items:
+              - key: ".env"
+                path: ".env"
