@@ -8,8 +8,10 @@ use App\Event;
 use App\Student;
 use App\StudentName;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class StudentLoginController extends Controller
 {
@@ -20,7 +22,8 @@ class StudentLoginController extends Controller
       // read more on validation at http://laravel.com/docs/validation
       $rules = array(
         'student_name_id'       => 'required|numeric',
-        'page_loaded' => 'required',
+        'activity_type' => ['required', Rule::in(['pageLoad', 'logout', 'login']),],
+        'initiating_url' => 'required',
       );
       $validator = Validator::make($request->all(), $rules);
 
@@ -30,7 +33,8 @@ class StudentLoginController extends Controller
         return response()->json([
           'status' => 'failed',
           'code' => 'validation-failed',
-          'message' => 'Validation failed'
+          'message' => 'Validation failed',
+          //'object' => $validator->errors()
         ], 400);
 
       } else {
@@ -39,10 +43,10 @@ class StudentLoginController extends Controller
 
         // Log the Workshop Student Navigating through the curriculum
         $logInAction = new Activity;
-        $logInAction->activity_type = "pageLoad";
+        $logInAction->activity_type = $request->input('activity_type');
         $logInAction->actor_type = "student";
         $logInAction->actor_id = $request->input('student_name_id');
-        $logInAction->activity_data = ['page_loaded' => $request->input('initiating_url')];
+        $logInAction->activity_data = json_encode(['initiating_url' => $request->input('initiating_url')]);
         $logInAction->user_agent = $request->header('User-Agent');
         $logInAction->actor_ip = $request->ip();
         $logInAction->save();
@@ -75,7 +79,7 @@ class StudentLoginController extends Controller
           'status' => 'failed',
           'code' => 'validation-failed',
           'message' => 'Validation failed',
-          'object' => $validator->errors()
+          //'object' => $validator->errors()
         ], 400);
       } else {
 
@@ -105,9 +109,10 @@ class StudentLoginController extends Controller
           'code' => 'student-logged-in',
           'message' => 'Student successfully logged in',
           'data' => [
-            'student_id' => $student_name->id,
             'student_email' => $student->email,
+            'student_id' => $student->id,
             'student_name' => $student_name->name,
+            'student_name_id' => $student_name->id,
           ]
         ], 200);
       }
@@ -121,7 +126,7 @@ class StudentLoginController extends Controller
       // validate
       // read more on validation at http://laravel.com/docs/validation
       $rules = array(
-        'student_id'     => 'required|numeric',
+        'student_name_id'     => 'required|numeric',
         'event_id'       => 'required',
         'initiating_url' => 'required',
       );
@@ -132,25 +137,43 @@ class StudentLoginController extends Controller
         return response()->json([
           'status' => 'failed',
           'code' => 'validation-failed',
-          'message' => 'Validation failed'
-        ], 400);
+          'message' => 'Validation failed',
+          'object' => $validator->errors()
+        ], 200);
       } else {
+
 
         // Look up EID
         // TODO: Add more robust time range look ups, add orderBy
-        $event = Event::where('event_id', $request->input('event_id'))->orderBy('created_at', 'asc')->first();
+        $now = Carbon::now();
+        $event_obj = Event::where('event_id', $request->input('event_id'))->where('start_time', '<=', $now)->where('end_time', '>=', $now)->orderBy('created_at', 'asc')->get();
+        
+        // ...we could return a list of events...but why overcompensate for human stupidity...
+        $event = $event_obj->first();
 
         if ($event) {
 
           // Find the first available seat and claim
-          $attendee = Attendee::where(['seat_state' => 0, 'event_id' => $event->id])->orderBy('seat_number', 'asc')->first();
-          $attendee->student_name_id = $request->input('student_name_id');
-          $attendee->seat_state = 1;
-          $attendee->save();
-
+          $findAttendee = Attendee::where(['seat_state' => 1, 'event_id' => $event->id, 'student_name_id' => $request->input('student_name_id')])->first();
+          if (!$findAttendee) {
+            $attendee = Attendee::where(['seat_state' => 0, 'event_id' => $event->id])->orderBy('seat_number', 'asc')->first();
+            $attendee->student_name_id = $request->input('student_name_id');
+            $attendee->seat_state = 1;
+            $attendee->save();
+          }
+          else {
+            $attendee = $findAttendee;
+          }
           // Load event assets from DB
-          $assets = json_decode($event->effective_asset_data);
-          $assets['cookies']['seat_number-cookie'] = ['cookie-key' => 'seat_number', 'cookie-value' => $attendee->seat_number, 'cookie-domain' => $assets['cookies'][0]['cookie-domain'], 'cookie-path' => $assets['cookies'][0]['cookie-path'], 'cookie-expiration' => $assets['cookies'][0]['cookie-expiration'], 'cookie-name' => 'Student Seat Number'];
+          $assets = json_decode($event->effective_asset_data, true);
+          $assets['cookies']['seat_number-cookie'] = [
+            'cookie_key' => 'seat_number',
+            'cookie_value' => $attendee->seat_number,
+            'cookie_domain' => $assets['cookies']['domain-cookie']['cookie_domain'],
+            'cookie_path' => $assets['cookies']['domain-cookie']['cookie_path'],
+            'cookie_expiration' => $assets['cookies']['domain-cookie']['cookie_expiration'],
+            'cookie_name' => 'Student Seat Number'
+          ];
           
           // Process variables in assets
           //nope nvm, do it client side with cookies and HTML data lol
@@ -160,8 +183,8 @@ class StudentLoginController extends Controller
           $logInAction->activity_type = "workshopInit";
           $logInAction->actor_type = "student";
           $logInAction->actor_id = $request->input('student_name_id');
-          $logInAction->activity_data = ['initiating_url' => $request->input('initiating_url'), 'event_id' => $request->input('event_id'), 'attendee_id' => $attendee->id];
-          $logInAction->user_agent = $request->header('User-Agent');
+          $logInAction->activity_data = json_encode(['initiating_url' => $request->input('initiating_url'), 'event_id' => $request->input('event_id'), 'attendee_id' => $attendee->id]);
+          $logInAction->user_agent = json_encode($request->header('User-Agent'));
           $logInAction->actor_ip = $request->ip();
           $logInAction->save();
 
@@ -185,7 +208,7 @@ class StudentLoginController extends Controller
             'status' => 'failed',
             'code' => 'invalid-event-id',
             'message' => 'Invalid Event ID'
-          ], 204);
+          ], 200);
 
         }
       }

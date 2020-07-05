@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function() {
   Route::post('student-login', 'API\StudentLoginController@handleLogin');
   Route::post('access-workshop-event', 'API\StudentLoginController@handleEventID');
+  Route::post('activity', 'API\StudentLoginController@handleFrontendActivity');
 });
 
 

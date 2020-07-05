@@ -82,54 +82,54 @@ class EventController extends Controller
               if (strstr($exIn[1], 'cookie-')) {
                 switch ($exIn[1]) {
                   case "cookie-name":
-                    $effective_asset_data['cookies'][$exIn[2]]['cookie-name'] = $iV;
+                    $effective_asset_data['cookies'][$exIn[2]]['cookie_name'] = $iV;
                   break;
                   case "cookie-key":
-                    $effective_asset_data['cookies'][$exIn[2]]['cookie-key'] = $iV;
+                    $effective_asset_data['cookies'][$exIn[2]]['cookie_key'] = $iV;
                   break;
                   case "cookie-value":
-                    $effective_asset_data['cookies'][$exIn[2]]['cookie-value'] = $iV;
+                    $effective_asset_data['cookies'][$exIn[2]]['cookie_value'] = $iV;
                   break;
                   case "cookie-domain":
-                    $effective_asset_data['cookies'][$exIn[2]]['cookie-domain'] = $iV;
+                    $effective_asset_data['cookies'][$exIn[2]]['cookie_domain'] = $iV;
                   break;
                   case "cookie-path":
-                    $effective_asset_data['cookies'][$exIn[2]]['cookie-path'] = $iV;
+                    $effective_asset_data['cookies'][$exIn[2]]['cookie_path'] = $iV;
                   break;
                   case "cookie-expiration":
-                    $effective_asset_data['cookies'][$exIn[2]]['cookie-expiration'] = $iV;
+                    $effective_asset_data['cookies'][$exIn[2]]['cookie_expiration'] = $iV;
                   break;
                 }
               }
               if (strstr($exIn[1], 'credential-')) {
                 switch ($exIn[1]) {
                   case "credential-name":
-                    $effective_asset_data['credentials'][$exIn[2]]['credential-name'] = $iV;
+                    $effective_asset_data['credentials'][$exIn[2]]['credential_name'] = $iV;
                   break;
                   case "credential-title":
-                    $effective_asset_data['credentials'][$exIn[2]]['credential-title'] = $iV;
+                    $effective_asset_data['credentials'][$exIn[2]]['credential_title'] = $iV;
                   break;
                   case "credential-url":
-                    $effective_asset_data['credentials'][$exIn[2]]['credential-url'] = $iV;
+                    $effective_asset_data['credentials'][$exIn[2]]['credential_url'] = $iV;
                   break;
                   case "credential-username":
-                    $effective_asset_data['credentials'][$exIn[2]]['credential-username'] = $iV;
+                    $effective_asset_data['credentials'][$exIn[2]]['credential_username'] = $iV;
                   break;
                   case "credential-password":
-                    $effective_asset_data['credentials'][$exIn[2]]['credential-url'] = $iV;
+                    $effective_asset_data['credentials'][$exIn[2]]['credential_url'] = $iV;
                   break;
                 }
               }
               if (strstr($exIn[1], 'link-')) {
                 switch ($exIn[1]) {
                   case "link-name":
-                    $effective_asset_data['links'][$exIn[2]]['link-name'] = $iV;
+                    $effective_asset_data['links'][$exIn[2]]['link_name'] = $iV;
                   break;
                   case "link-title":
-                    $effective_asset_data['links'][$exIn[2]]['link-title'] = $iV;
+                    $effective_asset_data['links'][$exIn[2]]['link_title'] = $iV;
                   break;
                   case "link-url":
-                    $effective_asset_data['links'][$exIn[2]]['link-url'] = $iV;
+                    $effective_asset_data['links'][$exIn[2]]['link_url'] = $iV;
                   break;
                 }
               }
