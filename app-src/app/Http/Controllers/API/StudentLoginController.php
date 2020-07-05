@@ -74,7 +74,8 @@ class StudentLoginController extends Controller
         return response()->json([
           'status' => 'failed',
           'code' => 'validation-failed',
-          'message' => 'Validation failed'
+          'message' => 'Validation failed',
+          'object' => $validator->errors()
         ], 400);
       } else {
 

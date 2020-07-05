@@ -20,9 +20,9 @@ return [
         'allow_credentials' => false,
 
         'allow_origins' => [
-            'localhost',
-            'redhatgov.io',
-            'rh-workshops.polyglot.academy',
+            'http://localhost:1313',
+            'https://redhatgov.io',
+            'https://rh-workshops.polyglot.academy',
         ],
 
         'allow_methods' => [
