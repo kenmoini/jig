@@ -5,12 +5,12 @@ if [ $COPY_ENV_FILE = "true" ]; then
 fi
 
 if [ $COPY_ENV_FILE_FROM_CONFIGMAP = "true" ]; then
-    cp /var/html/data/.env .env
+    ln -s /var/www/data/.env /var/www/html/.env
 fi
 
 if [ $GENERATE_SQLITE_DB = "true" ]; then
-    touch /var/www/html/local_db/db.sqlite
-    sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/html/local_db/db.sqlite,g" .env
+    touch /var/www/data/db.sqlite
+    sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/data/db.sqlite,g" .env
 fi
 
 if [ $GENERATE_ENV_KEY = "true" ]; then
