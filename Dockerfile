@@ -15,6 +15,8 @@ ENV COPY_ENV_FILE=true \
     SEED_INITIAL_ADMIN=true \
     SEED_DATABASE=true
 
+RUN chown -R $(id -u):$(id -g) .
+
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
@@ -25,17 +27,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN composer install
 
 RUN npm install \
- && npm run dev \
- && mkdir /var/www/jig-db/
+ && npm run dev
 
 COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
 COPY init-cmd.sh /var/www/html/init-cmd.sh
-
-USER ROOT
-
-# Reset permissions of filesystem to default values
-RUN /usr/libexec/container-setup && rpm-file-permissions
-
-USER 1001
 
 CMD /var/www/html/init-cmd.sh

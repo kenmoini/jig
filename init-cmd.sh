@@ -5,8 +5,8 @@ if [ $COPY_ENV_FILE = "true" ]; then
 fi
 
 if [ $GENERATE_SQLITE_DB = "true" ]; then
-    touch /var/www/jig-db/db.sqlite
-    sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/jig-db/db.sqlite,g" .env
+    touch /var/www/html/database/db.sqlite
+    sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/html/database/db.sqlite,g" .env
 fi
 
 if [ $GENERATE_ENV_KEY = "true" ]; then
