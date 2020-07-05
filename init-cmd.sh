@@ -13,6 +13,12 @@ if [ $GENERATE_SQLITE_DB = "true" ]; then
     sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/data/db.sqlite,g" .env
 fi
 
+if [ $GENERATE_SHOW_NEW_ENV_KEY = "true" ]; then
+    echo "New Application key:"
+    php artisan key:generate --show
+    echo "COPY TO YOUR CONFIGMAP FOR A NEW APPLICATION KEY!"
+fi
+
 if [ $GENERATE_ENV_KEY = "true" ]; then
     php artisan key:generate
 fi

@@ -13,7 +13,8 @@ ENV COPY_ENV_FILE=true \
     MIGRATE_DATABASE=true \
     SEED_INITIAL_ADMIN=true \
     SEED_DATABASE=true \
-    COPY_ENV_FILE_FROM_CONFIGMAP=false
+    COPY_ENV_FILE_FROM_CONFIGMAP=false \
+    GENERATE_SHOW_NEW_ENV_KEY=false
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \

@@ -8,12 +8,24 @@ Cache and sessions are also stored in the associated database.
 
 Requires mail functionality, default provider is set to SendGrid - many other options such as SMTP are available.
 
+## What is Jig?
+
+Jig is the back-end service that allows workshop proctors to easily set up and provide seamless workshop student experiences.
+
+A Workshop Proctor will log into Jig and create an Event.  That Event has all the needed student workshop details such as what Domain, Workshop ID, and Student User ID Numbers are auto-assigned and monitored as they progress through the workshops.Those 3 details (Domain, Workshop ID, pointing and numbering workshop participants with a User ID usually would take a substantial amount of time and cause a lot of confusion.
+
+Monitoring student activity is based on the front-end workshop curriculum, like that found at https://redhatgov.io - no special work is required on the curriculum authors or the workshop architects.
+
+## Why Jig?
+
+The name Jig came from well, wood jigs where one could take a template and an uncut medium, and punch in holes at the right places at the right angles with the right tools.  So, Jig helps take the uncut curriculum, and punches in the bits with the right domain, workshop ID, and user ID...whatever, names are dumb.
+
 ## Functions
 
-- Provides metadata and operations around Red Hat workshops - info on workshops, deployment, procturing, etc
+- Provides metadata and operations around Red Hat workshops via a RESTful API - info on workshops, deployment, procturing, etc
 - Allows students to "log in" and access workshops assets without being assigned numbers or passing of complicated details - automatically configures workshop curriculum with just a Name, Email, and Workshop Event ID.
 - Gather metadata around student interactions on the workshop platform (which pages, time, etc) [on page load track UA, referer, page, time, user ID, etc]
-- Domain validation only allows panel user registration from redhat.com and polyglot.ventures
+- Domain validation only allows panel user registration from redhat.com and polyglot.ventures (found in the Validation Rule `app-src/app/Rules/IsAllowedDomain.php`)
 
 ## How to use
 
@@ -66,6 +78,7 @@ There are a number of environmental variable that can be set on container start:
 | COPY_ENV_FILE                | true    | Copies the `.env.example` file to `.env`                                  |
 | COPY_ENV_FILE_FROM_CONFIGMAP | false   | Copies the `/var/html/data/.env` file provided by a ConfigMap to `.env`   |
 | GENERATE_ENV_KEY             | true    | Generates a new application key in the .env file                          |
+| GENERATE_SHOW_NEW_ENV_KEY    | false   | Generates a new application key and prints without setting                |
 | GENERATE_SQLITE_DB           | true    | Generates a SQLite DB File to use                                         |
 | MIGRATE_DATABASE             | true    | Runs Database Migrations                                                  |
 | SEED_INITIAL_ADMIN           | true    | Seeds the database with initial Admin user (admin@admin.com / Passw0rd1!) |
@@ -78,5 +91,28 @@ podman run -e SEED_INITIAL_ADMIN=false -e SEED_DATABASE=false -p 8080:8080 jig
 ```
 
 ### Deploy to Kubernetes
+
+Located in the `kubernetes/` directory, you'll find a number of manifests.  The first set will create the needed resources to deploy Jig, another set will deploy a single instance stateful mySQL instance to use with Jig.
+
+By default, deploying to Kubernetes means Jig does not use the SQLite Database file in the container and instead needs a persistent database store.  You ***can*** use a PV for the SQLite DB, but I'd recommend just using a normal relational DB.  Thankfully, the manifests for deploying mySQL for Jig are also provided!
+
+***Note:*** I would suggest modifying the manifest files and setting a more secure DB Pasword...
+
+```bash
+## Create namespace
+kubectl apply -f kubernetes/01-namespace.yaml
+## Deploy mySQL (optional, skip if you are using another DB)
+kubectl apply -f kubernetes/02-mysql-pv.yaml
+kubectl apply -f kubernetes/03-mysql-deployment.yaml
+kubectl apply -f kubernetes/04-mysql-services.yaml
+## Modify this before proceeding - such as rotating the application key!
+kubectl apply -f kubernetes/05-configmap.yaml
+## Modify the ENV variables on the container to meet your needs - on first deployment, change the migration and seeds to "true" then reapply the deployment with it set to "false".
+### Maybe even set GENERATE_SHOW_NEW_ENV_KEY to "true" on first deployment to generate a new Application Key, look in your logs on container start for the new key, then replace in your ConfigMap...
+kubectl apply -f kubernetes/06-deployment.yaml
+kubectl apply -f kubernetes/07-service.yaml
+## Modify to meet your domain that will serve the application externally.  Assumes there is an Ingress Controller and cert-manager for SSL.
+kubectl apply -f kubernetes/08-ingress.yaml
+```
 
 ### Deploy to OpenShift
