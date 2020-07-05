@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi7/php-73:latest
 
-USER ROOT
+USER root
 
 COPY app-src/ /var/www/html/
 WORKDIR /var/www/html/
