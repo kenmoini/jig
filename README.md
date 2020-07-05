@@ -57,6 +57,25 @@ podman run -p 8080:8080 jig
 
 Navigate to `http://localhost:8080` to view the site.
 
+#### Configuring the Container
+
+There are a number of environmental variable that can be set on container start:
+
+| Variable           | Default | Description                                                               |
+|--------------------|---------|---------------------------------------------------------------------------|
+| COPY_ENV_FILE      | true    | Copies the `.env.example` file to `.env`                                  |
+| GENERATE_ENV_KEY   | true    | Generates a new application key in the .env file                          |
+| GENERATE_SQLITE_DB | true    | Generates a SQLite DB File to use                                         |
+| MIGRATE_DATABASE   | true    | Runs Database Migrations                                                  |
+| SEED_INITIAL_ADMIN | true    | Seeds the database with initial Admin user (admin@admin.com / Passw0rd1!) |
+| SEED_DATABASE      | true    | Seeds the database with Workshops and their needed Assets                 |
+
+Augment the deployment of the container as such:
+
+```bash
+podman run -e SEED_INITIAL_ADMIN=false -e SEED_DATABASE=false -p 8080:8080 jig
+```
+
 ### Deploy to Kubernetes
 
 ### Deploy to OpenShift
