@@ -30,7 +30,8 @@ RUN composer install
 
 RUN npm install \
  && npm run dev \
- && mkdir /var/www/html/local_db/
+ && mkdir /var/www/html/local_db/ \
+ && chmod 777 /var/www/html/local_db/
 
 COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
 COPY init-cmd.sh /var/www/html/init-cmd.sh

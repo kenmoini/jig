@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: jig
-          image: kenmoini/jig:952b309c52f4876da9ee823ff27de51c7066d306
+          image: kenmoini/jig:f6183086bc586a36928b5ac96d7993a038b0f09a
           ports:
             - containerPort: 8080
               name: web
