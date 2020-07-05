@@ -2,9 +2,6 @@ FROM registry.access.redhat.com/ubi7/php-73:latest
 
 USER root
 
-COPY app-src/ /var/www/html/
-WORKDIR /var/www/html/
-
 ENV NODEJS_VERSION=10
 
 ENV CACHEBUSTER=LVL3 \
@@ -17,8 +14,6 @@ ENV COPY_ENV_FILE=true \
     SEED_INITIAL_ADMIN=true \
     SEED_DATABASE=true
 
-RUN chown -R $(id -u):$(id -g) .
-
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
@@ -26,13 +21,18 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && mkdir /opt/app-root/bin/ \
  && mv composer.phar /opt/app-root/bin/composer
 
+COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
+COPY init-cmd.sh /var/www/html/init-cmd.sh
+
+COPY app-src/ /var/www/html/
+WORKDIR /var/www/html/
+
+RUN chown -R $(id -u):$(id -g) .
+
 RUN composer install
 
 RUN npm install \
  && npm run dev
-
-COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
-COPY init-cmd.sh /var/www/html/init-cmd.sh
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:0 /var/www/ && chmod -R ug+rwx /var/www/ && \
