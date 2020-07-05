@@ -21,11 +21,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && mkdir /opt/app-root/bin/ \
  && mv composer.phar /opt/app-root/bin/composer
 
-COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
-COPY init-cmd.sh /var/www/html/init-cmd.sh
-
 COPY app-src/ /var/www/html/
 WORKDIR /var/www/html/
+
+COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
+COPY init-cmd.sh /var/www/html/init-cmd.sh
 
 RUN chown -R $(id -u):$(id -g) .
 
