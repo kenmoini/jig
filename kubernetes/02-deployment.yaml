@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: jig
-          image: kenmoini/jig:a3209232fdbaa16f07f610c7d838f110d2260c4b
+          image: kenmoini/jig:06619c49cec4565bf7a78d303ca8c02c2eb68de4
           env:
             - name: DB_CONNECTION
               value: mysql
