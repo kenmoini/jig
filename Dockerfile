@@ -1,5 +1,7 @@
 FROM registry.access.redhat.com/ubi7/php-73:latest
 
+USER ROOT
+
 COPY app-src/ /var/www/html/
 WORKDIR /var/www/html/
 
@@ -31,5 +33,7 @@ RUN npm install \
 
 COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
 COPY init-cmd.sh /var/www/html/init-cmd.sh
+
+USER 1001
 
 CMD /var/www/html/init-cmd.sh
