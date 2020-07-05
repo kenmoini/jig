@@ -34,6 +34,10 @@ RUN npm install \
 COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
 COPY init-cmd.sh /var/www/html/init-cmd.sh
 
+# Drop the root user and make the content of /opt/app-root owned by user 1001
+RUN chown -R 1001:0 /var/www/ && chmod -R ug+rwx /var/www/ && \
+    rpm-file-permissions
+
 USER 1001
 
 CMD /var/www/html/init-cmd.sh
