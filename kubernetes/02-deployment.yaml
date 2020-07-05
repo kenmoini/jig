@@ -19,7 +19,7 @@ spec:
       containers:
         - name: jig
           imagePullPolicy: Always
-          image: kenmoini/jig:804687e45e6001f236681bb49c8e0bbcb2033a36
+          image: kenmoini/jig:29105653454bce2a2cf75c586d69ea18cc2b44c5
           env:
             - name: DB_CONNECTION
               value: mysql

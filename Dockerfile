@@ -18,7 +18,6 @@ ENV COPY_ENV_FILE=true \
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
- && echo $PATH \
  && mkdir /opt/app-root/bin/ \
  && mv composer.phar /opt/app-root/bin/composer
 
