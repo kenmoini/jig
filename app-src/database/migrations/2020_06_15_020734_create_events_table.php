@@ -21,8 +21,8 @@ class CreateEventsTable extends Migration
             $table->string('event_title');
             $table->text('description')->nullable();
             $table->text('private_notes')->nullable();
-            $table->timestamp('start_time', 0);
-            $table->timestamp('end_time', 0);
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->string('event_id'); // could be unique, but better to have the system intelligently test EIDs based on timeframes to have recurring IDs
             $table->integer('seat_count')->default('50');
             $table->longText('effective_asset_data');
