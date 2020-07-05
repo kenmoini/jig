@@ -31,4 +31,11 @@ RUN npm install \
 COPY apache-vhost.conf /opt/app-root/etc/conf.d/site.conf
 COPY init-cmd.sh /var/www/html/init-cmd.sh
 
+USER ROOT
+
+# Reset permissions of filesystem to default values
+RUN /usr/libexec/container-setup && rpm-file-permissions
+
+USER 1001
+
 CMD /var/www/html/init-cmd.sh
