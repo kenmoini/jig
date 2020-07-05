@@ -1,8 +1,30 @@
 #/bin/bash
 
-cp .env.example .env
+if [ $COPY_ENV_FILE = "true" ]; then
+    cp .env.example .env
+fi
 
-php artisan key:generate
-php artisan migrate
+if [ $GENERATE_SQLITE_DB = "true" ]; then
+    touch /var/www/jig-db/db.sqlite
+    sed -i "s,DB_DATABASE=.*,DB_DATABASE=/var/www/jig-db/db.sqlite,g" .env
+fi
 
-exec /start.sh
+if [ $GENERATE_ENV_KEY = "true" ]; then
+    php artisan key:generate
+fi
+
+if [ $MIGRATE_DATABASE = "true" ]; then
+    php artisan migrate
+fi
+
+composer dump-autoload
+
+if [ $SEED_INITIAL_ADMIN = "true" ]; then
+    php artisan db:seed --class=AdminUserSeeder
+fi
+
+if [ $SEED_DATABASE = "true" ]; then
+    php artisan db:seed
+fi
+
+exec /usr/libexec/s2i/run
