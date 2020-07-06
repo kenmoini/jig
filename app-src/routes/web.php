@@ -47,8 +47,14 @@ Route::prefix('panel')->middleware(['verified'])->group(function() {
   Route::get('events/show/{id}', 'EventController@show')->name('panel.get.events.show');
   Route::post('events/destroy/{id}', 'EventController@destroy')->name('panel.post.events.destroy');
 
+  Route::post('events/release_student/{id}', 'AttendeeController@releaseStudent')->name('panel.post.attendee.releaseStudent');
+  Route::post('events/reset_seat/{id}', 'AttendeeController@resetSeat')->name('panel.post.attendee.resetSeat');
+
   // Students
   Route::get('students', 'StudentController@index')->name('panel.get.students.index');
+  Route::get('students/edit/{id}', 'StudentController@edit')->name('panel.get.students.edit');
+  Route::get('students/show/{id}', 'StudentController@show')->name('panel.get.students.show');
+  Route::post('students/destroy/{id}', 'StudentController@destroy')->name('panel.post.students.destroy');
 
   // Activity Reports (Per student, per user/proctor associated events, per event, per workshop - time series and cumulative/avg analysis)
   Route::get('activity', 'ActivityController@index')->name('panel.get.activity.index');

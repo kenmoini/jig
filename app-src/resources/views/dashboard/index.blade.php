@@ -24,6 +24,11 @@
   </div>
   <div class="pf-l-gallery__item">
     <div class="pf-c-card">
+      <div class="pf-c-card__body"><h1 class="pf-u-mr-xl pf-u-float-left">{{ $currentEvents }} Current Events</h1></div>
+    </div>
+  </div>
+  <div class="pf-l-gallery__item">
+    <div class="pf-c-card">
       <div class="pf-c-card__body"><h1 class="pf-u-mr-xl pf-u-float-left">{{ $previousEvents }} Previous Events</h1></div>
     </div>
   </div>
@@ -38,10 +43,9 @@
     </div>
   </div>
 </div>
-Todo:
+<strong>Todo:</strong>
 <ul>
-  <li>Event calendar</li>
-  <li>Current Active Workshops</li>
+  <li>Event calendar view</li>
   <li>Current Active Students</li>
 </ul>
 

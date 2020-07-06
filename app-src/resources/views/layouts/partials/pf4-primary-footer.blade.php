@@ -1,7 +1,7 @@
 </section>
 <div id="page-footer" class="container pf-u-p-xl">
   <p>
-    <em>Crafted by Polyglot Ventures</em>
+    <em>Crafted by <a href="https://kenmoini.com">Ken Moini</a></em>
   </p>
 </div>
 

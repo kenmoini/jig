@@ -15,17 +15,20 @@ class DashboardController extends Controller
     public function index()
     {
         $events = Event::all();
-        $upcommingCount = $prevCount = 0;
+        $upcommingCount = $currentCount = $prevCount = 0;
         $nowTime = \Carbon\Carbon::now();
         foreach ($events as $event) {
-          if ($event->start_time > $nowTime) {
+          if (($event->start_time <= $nowTime) && ($event->end_time >= $nowTime)) {
+            $currentCount++;
+          }
+          if ($event->start_time >= $nowTime) {
             $upcommingCount++;
           }
-          else {
+          if ($event->end_time <= $nowTime) {
             $prevCount++;
           }
         }
-        return view('dashboard.index')->with(['previousEvents' => $prevCount, 'upcommingEvents' => $upcommingCount]);
+        return view('dashboard.index')->with(['previousEvents' => $prevCount, 'upcommingEvents' => $upcommingCount, 'currentEvents' => $currentCount]);
     }
 
     /**

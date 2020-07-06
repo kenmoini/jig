@@ -30,4 +30,8 @@ class Student extends Model
    * @var array
    */
   protected $casts = [];
+
+  public function student_names() {
+    return $this->hasMany('App\StudentName', 'id');
+  }
 }

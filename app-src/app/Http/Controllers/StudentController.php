@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -13,7 +14,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-      return view('students.index');
+      $students = Student::with('student_names')->get();
+      return view('students.index')->with(['students' => $students]);
     }
 
     /**
