@@ -19,7 +19,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('panel')->middleware(['verified'])->group(function() {
+Route::prefix('panel')->middleware(['auth', 'verified', 'defaultadmin.usercheck'])->group(function() {
 
   //Dashboard
   Route::get('dashboard', 'DashboardController@index')->name('panel.get.dashboard.index');

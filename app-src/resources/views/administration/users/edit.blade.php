@@ -43,6 +43,7 @@
     <div class="pf-c-form__group-label"></div>
     <div class="pf-c-form__group-control">
       <hr/>
+      <p class="pf-u-mt-lg"><em>Note: The default Administrator user (and any other user) cannot have a default password set!</em></p>
     </div>
   </div>
   <div class="pf-c-form__group">

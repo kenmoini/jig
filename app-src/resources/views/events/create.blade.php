@@ -48,7 +48,7 @@
     </div>
     <div class="pf-c-form__group-control">
       <select class="pf-c-form-control" id="event_workshop_id" name="event_workshop_id" required>
-        <option value="">Select an workshop...</option>
+        <option value="">Select a workshop...</option>
         @foreach($workshops as $workshop)
           <option value="{{ $workshop->id }}">{{ $workshop->name }}</option>
         @endforeach
@@ -119,6 +119,34 @@
       </div>
       <div class="pf-c-form__group-control">
         <input class="pf-c-form-control" type="text" id="event_eid" name="event_eid" required />
+      </div>
+    </div>
+    
+    <div class="pf-c-form__group pf-u-mb-sm">
+      <div class="pf-c-form__group-label">
+        <label class="pf-c-form__label" for="privacy_level">
+          <span class="pf-c-form__label-text">Privacy Level</span>
+          <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
+        </label>
+      </div>
+      <div class="pf-c-form__group-control">
+        <select class="pf-c-form-control" id="privacy_level" name="privacy_level" required>
+          <option value="0">Publicly listed</option>
+          <option value="1" disabled="disabled">Publicly listed, require passcode</option>
+          <option value="2">Private & Unlisted, only via Event ID</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="pf-c-form__group pf-u-mb-sm pf-u-hidden" id="passcodeHolder">
+      <div class="pf-c-form__group-label">
+        <label class="pf-c-form__label" for="passcode">
+          <span class="pf-c-form__label-text">Passcode</span>
+          <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
+        </label>
+      </div>
+      <div class="pf-c-form__group-control">
+        <input class="pf-c-form-control" type="text" id="passcode" name="passcode" />
       </div>
     </div>
       
@@ -441,6 +469,15 @@
       hideLoadingScreen();
     });
 
+    jQuery("#createEventForm").on('change', 'select#privacy_level', function() {
+      if (jQuery(this).children("option:selected").val() == 1) {
+        jQuery("#passcodeHolder").removeClass('pf-u-hidden');
+      }
+      else {
+        jQuery("#passcodeHolder").addClass('pf-u-hidden');
+      }
+    });
+
     flatpickr("#event_start_date", {
       enableTime: true,
       dateFormat: "Y-m-d H:i:S",
@@ -453,6 +490,7 @@
     });
     jQuery("#createEventForm").on('click', "#addCustomAssetBtn", function(e) {
       e.preventDefault();
+      //Whoops - this is a TODO
     });
       /*
       $("#event_start_date").on("change.datetimepicker", function (e) {

@@ -26,11 +26,11 @@
       </div>
     </div>
   </li>
-  <li class="pf-c-data-list__item" aria-labelledby="event-event_id">
+  <li class="pf-c-data-list__item" aria-labelledby="event-user">
     <div class="pf-c-data-list__item-row">
       <div class="pf-c-data-list__item-content">
         <div class="pf-c-data-list__cell">
-          <span id="event-event_id">Created By</span>
+          <span id="event-user">Created By</span>
         </div>
         <div class="pf-c-data-list__cell">{{ $event->user()->first()->name }}</div>
       </div>
@@ -57,13 +57,31 @@
       </div>
     </div>
   </li>
-  <li class="pf-c-data-list__item" aria-labelledby="event-event_id">
+  <li class="pf-c-data-list__item" aria-labelledby="event-seat_count">
     <div class="pf-c-data-list__item-row">
       <div class="pf-c-data-list__item-content">
         <div class="pf-c-data-list__cell">
-          <span id="event-event_id">Number of Seats</span>
+          <span id="event-seat_count">Number of Seats</span>
         </div>
         <div class="pf-c-data-list__cell">{{ $event->seat_count }}</div>
+      </div>
+    </div>
+  </li>
+  <li class="pf-c-data-list__item" aria-labelledby="event-privacy_level">
+    <div class="pf-c-data-list__item-row">
+      <div class="pf-c-data-list__item-content">
+        <div class="pf-c-data-list__cell">
+          <span id="event-privacy_level">Privacy Level</span>
+        </div>
+        <div class="pf-c-data-list__cell">
+        @if($event->privacy_level == 0)
+        Public
+        @elseif($event->privacy_level == 1)
+        Public, passcode protected ({{$event->passcode}})
+        @else
+        Private
+        @endif
+        </div>
       </div>
     </div>
   </li>
@@ -77,7 +95,7 @@
       </div>
     </div>
   </li>
-  <li class="pf-c-data-list__item" aria-labelledby="event-description">
+  <li class="pf-c-data-list__item" aria-labelledby="event-private_notes">
     <div class="pf-c-data-list__item-row">
       <div class="pf-c-data-list__item-content">
         <div class="pf-c-data-list__cell">
@@ -87,11 +105,11 @@
       </div>
     </div>
   </li>
-  <li class="pf-c-data-list__item" aria-labelledby="event-event_id">
+  <li class="pf-c-data-list__item" aria-labelledby="event-Assets">
     <div class="pf-c-data-list__item-row">
       <div class="pf-c-data-list__item-content">
         <div class="pf-c-data-list__cell">
-          <span id="event-event_id">Effective Assets (make this nicer)</span>
+          <span id="event-Assets">Effective Assets (make this nicer)</span>
         </div>
         <div class="pf-c-data-list__cell">
         <table class="pf-c-table pf-m-grid-lg" role="grid" id="effectiveAsset-table">
