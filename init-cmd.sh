@@ -24,7 +24,7 @@ if [ $GENERATE_ENV_KEY = "true" ]; then
 fi
 
 if [ $MIGRATE_DATABASE = "true" ]; then
-    php artisan migrate
+    php artisan migrate --force
 fi
 
 composer dump-autoload
