@@ -21,9 +21,9 @@ return [
 
         'allow_origins' => [
             '*',
-            'http://localhost:1313',
-            'https://redhatgov.io',
-            'https://*.polyglot.academy',
+            //'http://localhost:1313',
+            //'https://redhatgov.io',
+            //'https://*.polyglot.academy',
         ],
 
         'allow_methods' => [
