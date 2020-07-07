@@ -213,4 +213,45 @@ class StudentLoginController extends Controller
         }
       }
     }
+
+    public function findAvailableEvents() {
+      // Access this API endpoint via /api/v1/find-available-events/
+
+      $now = Carbon::now();
+      $events = Event::where('start_time', '<=', $now)->where('end_time', '>=', $now)->where('privacy_level', '<=', 1)->orderBy('created_at', 'asc')->with(['workshop'])->get();
+      
+
+      if (count($events)) {
+        $eventArray = [];
+        foreach($events as $event) {
+          $eventArray[] = [
+            'event_id' => $event['id'],
+            'event_eid' => $event['event_id'],
+            'event_title' => $event['event_title'],
+            'start_time' => $event['start_time'],
+            'end_time' => $event['end_time'],
+            'seat_count' => $event['seat_count'],
+            'seats_available' => count(Attendee::where(['seat_state' => 0, 'event_id' => $event['id']])->get()),
+            'workshop_title' => $event->workshop()->first()->name,
+            'privacy_level' => $event['privacy_level']
+          ];
+        }
+        return response()->json([
+          'status' => 'success',
+          'code' => 'available-events-found',
+          'message' => 'Available events found!',
+          'events' => $eventArray,
+        ], 200);
+      }
+      else {
+
+        // No events found
+        return response()->json([
+          'status' => 'failed',
+          'code' => 'no-available-events',
+          'message' => 'No active and available events found.'
+        ], 200);
+
+      }
+    }
 }
