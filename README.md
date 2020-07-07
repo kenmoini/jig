@@ -32,6 +32,12 @@ The name Jig came from well, wood jigs where one could take a template and an un
 
 ### Deploy Natively
 
+To deploy locally on your own development machine, you need:
+
+- PHP 7.2+
+- Composer
+- Node/NPM
+
 ```bash
 cd app-src/
 composer install
