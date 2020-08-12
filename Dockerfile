@@ -11,7 +11,7 @@ ENV COPY_ENV_FILE=true \
     SEED_DATABASE=true \
     COPY_ENV_FILE_FROM_CONFIGMAP=false \
     GENERATE_SHOW_NEW_ENV_KEY=false \
-    PATH="/opt/app-root/bin/:$PATH"
+    PATH=/opt/app-root/bin/:$PATH
 
 # Update image
 RUN yum update -y --disablerepo=* --enablerepo=ubi-8-appstream --enablerepo=ubi-8-baseos \
@@ -60,7 +60,7 @@ ENV COPY_ENV_FILE=true \
     SEED_INITIAL_ADMIN=true \
     SEED_DATABASE=true \
     COPY_ENV_FILE_FROM_CONFIGMAP=false \
-    GENERATE_SHOW_NEW_ENV_KEY=false
+    GENERATE_SHOW_NEW_ENV_KEY=false \
     PATH=/opt/app-root/bin/:$PATH
 
 #labels for container catalog
