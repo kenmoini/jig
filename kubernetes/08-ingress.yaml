@@ -25,5 +25,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: jig
+              serviceName: jig-workshop-worker-svc
               servicePort: 8080

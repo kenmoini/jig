@@ -10,7 +10,7 @@ metadata:
 data:
   .env: |
     APP_NAME=Jig
-    APP_ENV=local
+    APP_ENV=k8s
     APP_KEY=base64:aFOsf9UVdLX8bc9akpR9xEGIEx7+c4UShwPZ7XPrmCI=
     APP_DEBUG=false
     APP_URL=https://localhost
@@ -18,7 +18,7 @@ data:
     LOG_CHANNEL=stack
 
     DB_CONNECTION=mysql
-    DB_HOST=mysql
+    DB_HOST=jig-mysql-svc
     DB_PORT=3306
     DB_DATABASE=jigdb
     DB_USERNAME=root
