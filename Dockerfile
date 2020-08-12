@@ -95,6 +95,8 @@ WORKDIR "/var/www/html"
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN mkdir -p /var/www/data && \
+    touch /var/log/php-fpm.log && \
+    chmod 777 /var/log/php-fpm.log && \
     chown -R 1001:0 /var/www/ && chmod -R ug+rwx /var/www/ && \
     chown -R 1001:0 ${APP_ROOT} && chmod -R ug+rwx ${APP_ROOT} && \
     rpm-file-permissions
