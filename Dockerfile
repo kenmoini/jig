@@ -19,8 +19,7 @@ RUN yum update -y --disablerepo=* --enablerepo=ubi-8-appstream --enablerepo=ubi-
 
 # Install NPM and PHP
 RUN yum install -y --disablerepo=* --enablerepo=ubi-8-appstream --enablerepo=ubi-8-baseos npm nodejs nodejs-devel autoconf automake binutils gcc gcc-c++ gdb glibc-devel libtool make pkgconf pkgconf-m4 pkgconf-pkg-config redhat-rpm-config rpm-build-libs git wget curl php php-fpm php-cli php-pgsql php-devel php-xml php-json php-pdo php-mysqlnd php-bcmath php-gd php-xmlrpc php-soap php-mbstring \
- && rm -rf /var/cache/yum \
- && pip3 install supervisor
+ && rm -rf /var/cache/yum
 
 # Clear Image
 RUN rm -rf /var/www/html \
