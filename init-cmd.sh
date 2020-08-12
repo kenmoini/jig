@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 if [ $COPY_ENV_FILE = "true" ]; then
     cp .env.example .env

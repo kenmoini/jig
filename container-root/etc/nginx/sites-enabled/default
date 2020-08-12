@@ -30,8 +30,7 @@ server {
     default_type "text/plain";
   }
   location ~ \.php$ {
-    #try_files $uri =404;
-		try_files $uri $uri/ /index.php?$query_string;
+    try_files $uri =404;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_pass unix:/opt/app-root/var/run/php-fpm.sock;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -70,7 +69,8 @@ server {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to index.html
 		#try_files $uri $uri/ =404;
-		try_files $uri $uri/ /index.php?$query_string;
+		#try_files $uri $uri/ /index.php?$query_string;
+    try_files $uri $uri/ /index.php;
 	}
   error_page 404 /index.php;
   #location ~* \.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|mp3|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)(\?ver=[0-9.]+)?$ {
