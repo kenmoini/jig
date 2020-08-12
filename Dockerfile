@@ -61,7 +61,8 @@ ENV COPY_ENV_FILE=true \
     COPY_ENV_FILE_FROM_CONFIGMAP=false \
     GENERATE_SHOW_NEW_ENV_KEY=false \
     PATH=/opt/app-root/bin/:$PATH \
-    APP_ROOT=/opt/app-root
+    APP_ROOT=/opt/app-root \
+    HOME=/opt/app-root
 
 #labels for container catalog
 LABEL summary="Jig is an application that is used to power engaging workshops."

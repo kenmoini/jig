@@ -4,7 +4,9 @@ metadata:
   name: jig-env
   namespace: jig-workshop-worker
   labels:
-    app: jig
+    app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker
 data:
   .env: |
     APP_NAME=Jig

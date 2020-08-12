@@ -3,3 +3,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: jig-workshop-worker
+  labels:
+    app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker

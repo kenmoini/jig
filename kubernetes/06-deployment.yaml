@@ -2,22 +2,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jig
+  name: jig-workshop-worker
   namespace: jig-workshop-worker
+  labels:
+    app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker
 spec:
   selector:
     matchLabels:
-      app: jig
+      app: jig-workshop-worker
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: jig # has to match .spec.selector.matchLabels
+        app: jig-workshop-worker # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-        - name: jig
+        - name: jig-workshop-worker
           imagePullPolicy: Always
           image: kenmoini/jig:latest
           env:

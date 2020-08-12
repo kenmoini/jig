@@ -1,10 +1,12 @@
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
-  name: jig
+  name: jig-workshop-worker-ingress
   namespace: jig-workshop-worker
   labels:
     app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker
   annotations:
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
