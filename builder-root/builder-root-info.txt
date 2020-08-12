@@ -1,0 +1,1 @@
+This folder is for files you want to copy to the builder image layers but not the final container image!

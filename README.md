@@ -38,13 +38,57 @@ To deploy locally on your own development machine, you need:
 - Composer
 - Node/NPM
 
+To start from a fresh Fedora machine:
+
+```bash
+dnf update -y
+dnf install -y httpd php php-zip php-mysqlnd php-mcrypt php-xml php-mbstring php-gd php-json php-bcmath php-cli php-sodium mariadb-server composer unzip nodejs git firewalld fail2ban certbot certbot-apache
+systemctl start mariadb.service
+systemctl enable mariadb.service
+mysql -u root
+mysql> CREATE DATABASE jigdb; exit
+mysql_secure_installation
+
+systemctl start httpd
+systemctl enable httpd
+
+systemctl start firewalld
+systemctl enable firewalld
+
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+firewall-cmd --permanent --add-service=ssh
+firewall-cmd --reload
+
+cd /var/www
+
+git clone https://github.com/kenmoini/jig
+mv jig jig.polyglot.academy
+
+chown apache:apache -R jig.polyglot.academy
+chmod 775 -R jig.polyglot.academy/app-src/storage
+
+setsebool -P httpd_can_network_connect 1
+semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/jig.polyglot.academy(/.*)?"
+chcon -t httpd_sys_rw_content_t -R /var/www/jig.polyglot.academy
+restorecon -R -v /var/www/jig.polyglot.academy
+
+rm /etc/httpd/conf.d/ssl.conf
+
+certbot --apache
+echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | sudo tee -a /etc/crontab > /dev/null
+
+cd jig.polyglot.academy
+
+```
+
 ```bash
 cd app-src/
 composer install
 npm install
 npm run dev
-cp .env.example .env
-touch db.sqlite
+cp .env.example .env # Modify to suit your needs
+touch db.sqlite # or use the MariaDB as done in a fresh set up
 php artisan key:generate
 php artisan migrate
 composer dump-autoload
