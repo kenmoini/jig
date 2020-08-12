@@ -85,9 +85,7 @@ RUN rm -rf /etc/nginx/sites-enabled/default \
  && rm -rf /var/www/html \
  && mkdir -p /etc/supervisor/conf.d/ \
  && mkdir -p /etc/nginx/sites-enabled/ \
- && mkdir -p /var/www/html/public \
- && mkdir -p /var/log/php-fpm \
- && mkdir -p /opt/app-root/bin
+ && mkdir -p /var/www/html/public
 
 COPY container-root/ /
 COPY --from=BUILDER /var/www/html /var/www/html
