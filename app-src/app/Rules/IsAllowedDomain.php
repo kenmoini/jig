@@ -15,6 +15,7 @@ class IsAllowedDomain implements Rule
     */
     protected $allowedDomains = [
       'redhat.com',
+      'polyglot.academy',
       'polyglot.ventures',
     ];
 
