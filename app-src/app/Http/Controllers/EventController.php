@@ -69,6 +69,7 @@ class EventController extends Controller
           $event->workshop_id = $request->input('event_workshop_id');
           $event->event_title = $request->input('event_title');
           $event->description = $request->input('event_description');
+          $event->location = $request->input('event_location');
           $event->private_notes = $request->input('event_private_notes');
           $event->start_time = $request->input('event_start_date');
           $event->end_time = $request->input('event_end_date');

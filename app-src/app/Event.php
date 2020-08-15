@@ -16,7 +16,7 @@ class Event extends Model
    */
 
   protected $fillable = [
-    'user_id', 'workshop_id', 'event_title', 'description', 'private_notes', 'start_time', 'end_time', 'event_id', 'seat_count', 'effective_asset_data', 'created_at', 'updated_at'
+    'user_id', 'workshop_id', 'event_title', 'description', 'private_notes', 'start_time', 'end_time', 'event_id', 'seat_count', 'effective_asset_data', 'created_at', 'updated_at', 'location', 'privacy_level', 'passcode'
   ];
 
   /**
@@ -66,5 +66,26 @@ class Event extends Model
     else {
       return 'Upcoming Future Event';
     }
+  }
+  public function getPrivacyDescriptionAttribute() {
+    switch($this->privacy_level) {
+      case "1":
+        return "Public, Passcode Protected";
+      break;
+      case "2":
+        return "Private, Event ID entry only";
+      break;
+      case "0":
+      default:
+        return "Public";
+      break;
+      // 0 = Public, 1 = Passcode Protected, 2 = Private, entry by event ID only
+    }
+  }
+  public function getStartTimeLongAttribute() {
+    return $this->start_time->format('Y-m-d H:i:s');
+  }
+  public function getEndTimeLongAttribute() {
+    return $this->end_time->format('Y-m-d H:i:s');
   }
 }

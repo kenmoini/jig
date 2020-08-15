@@ -57,6 +57,16 @@
       </div>
     </div>
   </li>
+  <li class="pf-c-data-list__item" aria-labelledby="event-location">
+    <div class="pf-c-data-list__item-row">
+      <div class="pf-c-data-list__item-content">
+        <div class="pf-c-data-list__cell">
+          <span id="event-location">Location</span>
+        </div>
+        <div class="pf-c-data-list__cell">{{ $event->location }}</div>
+      </div>
+    </div>
+  </li>
   <li class="pf-c-data-list__item" aria-labelledby="event-seat_count">
     <div class="pf-c-data-list__item-row">
       <div class="pf-c-data-list__item-content">

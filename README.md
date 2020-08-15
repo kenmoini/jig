@@ -2,11 +2,13 @@
 
 This is a PHP application built to provide advanced functionality to Red Hat workshops.
 
-By default it operates via a SQLite database stored locally.  The database can easily be switched to any other relational database with the setting of a few variables.
+By default when run locally it operates via a SQLite database stored locally.  The database can easily be switched to any other relational database with the setting of a few variables.  When operating on Kubernetes/OpenShift, there are assets and the default configuration to support a MySQL database.
 
 Cache and sessions are also stored in the associated database.
 
-Requires mail functionality, default provider is set to SendGrid - many other options such as SMTP are available.
+Does not require but is enhanced by mail functionality, default provider is set to SendGrid - many other options such as SMTP are available.
+
+Email verifications for account registrations are disabled as a default because Red Hat spam filters are mean...can be enabled by setting a `SEND_USER_REGISTRATION_CONFIRMATION` configuration variable.
 
 ## What is Jig?
 
@@ -166,3 +168,5 @@ kubectl apply -f kubernetes/08-ingress.yaml
 ```
 
 ### Deploy to OpenShift
+
+*Coming soon...*

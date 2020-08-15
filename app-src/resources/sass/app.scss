@@ -7,6 +7,11 @@
 // Bootstrap
 //@import '~bootstrap/scss/bootstrap';
 
+// tui-calendar
+@import '~tui-calendar/dist/tui-calendar.css';
+@import '~tui-date-picker/dist/tui-date-picker.css';
+@import '~tui-time-picker/dist/tui-time-picker.css';
+
 
 .collapse:not(.show), .pf-c-dropdown__menu, .modal:not(.show), #modalHolder:not(.show) {
   display: none;
@@ -63,4 +68,7 @@ span.eventStatus.upcoming {
 }
 span.eventStatus.ongoing {
   background-color:#00cccc;
+}
+tr td a.pf-c-button {
+  margin-bottom: 1rem;
 }

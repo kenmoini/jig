@@ -76,6 +76,17 @@
         <textarea class="pf-c-form-control" type="text" id="event_private_notes" name="event_private_notes" aria-label="Private notes, used internally"></textarea>
       </div>
     </div>
+      
+    <div class="pf-c-form__group pf-u-mb-sm">
+      <div class="pf-c-form__group-label">
+        <label class="pf-c-form__label" for="event_location">
+          <span class="pf-c-form__label-text">Location</span>
+        </label>
+      </div>
+      <div class="pf-c-form__group-control">
+        <input class="pf-c-form-control" type="text" id="event_location" name="event_location" />
+      </div>
+    </div>
 
     <div class="pf-c-form__group pf-u-mb-sm">
       <div class="pf-c-form__group-label">

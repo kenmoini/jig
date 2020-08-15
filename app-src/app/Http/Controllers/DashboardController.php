@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -16,7 +17,8 @@ class DashboardController extends Controller
     {
         $events = Event::all();
         $upcommingCount = $currentCount = $prevCount = 0;
-        $nowTime = \Carbon\Carbon::now();
+        $eventsProcessed = [];
+        $nowTime = Carbon::now();
         foreach ($events as $event) {
           if (($event->start_time <= $nowTime) && ($event->end_time >= $nowTime)) {
             $currentCount++;
@@ -27,8 +29,13 @@ class DashboardController extends Controller
           if ($event->end_time <= $nowTime) {
             $prevCount++;
           }
+          $eventsProcessed[] = [
+            'name' => $event->name,
+            'start' => $event->start_time_long,
+            'end' => $event->end_time_long,
+          ];
         }
-        return view('dashboard.index')->with(['previousEvents' => $prevCount, 'upcommingEvents' => $upcommingCount, 'currentEvents' => $currentCount]);
+        return view('dashboard.index')->with(['events' => $events, 'previousEvents' => $prevCount, 'upcommingEvents' => $upcommingCount, 'currentEvents' => $currentCount]);
     }
 
     /**

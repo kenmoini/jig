@@ -1,6 +1,8 @@
 /* eslint-disable */
 window._ = require('lodash');
 window.slugify = require('slugify');
+window.Calendar = require('tui-calendar');
+window.moment = require('moment');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
