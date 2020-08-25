@@ -14,6 +14,7 @@ data:
     APP_KEY=base64:aFOsf9UVdLX8bc9akpR9xEGIEx7+c4UShwPZ7XPrmCI=
     APP_DEBUG=false
     APP_URL=https://localhost
+    APP_USE_HTTPS=true
 
     LOG_CHANNEL=stack
 
