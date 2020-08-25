@@ -28,6 +28,10 @@ if [ $MIGRATE_DATABASE = "true" ]; then
 fi
 
 composer dump-autoload
+php artisan clear-compiled
+php artisan cache:clear
+php artisan event:clear
+php artisan optimize:clear
 
 if [ $SEED_INITIAL_ADMIN = "true" ]; then
     php artisan db:seed --class=AdminUserSeeder
