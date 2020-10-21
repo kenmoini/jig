@@ -49,6 +49,7 @@
         <option value="">Select an endpoint...</option>
         <option value="https://redhatgov.io/workshops/">https://redhatgov.io/workshops/</option>
         <option value="https://workshops.polyglot.academy/">https://workshops.polyglot.academy/</option>
+        <option value="https://learn.kemo.network/">https://learn.kemo.network/</option>
       </select>
     </div>
   </div>

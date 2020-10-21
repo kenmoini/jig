@@ -50,6 +50,7 @@
         <option value="">Select an endpoint...</option>
         <option value="https://redhatgov.io/workshops/" @if($workshop->curriculum_endpoint == "https://redhatgov.io/workshops/") selected @endif>https://redhatgov.io/workshops/</option>
         <option value="https://workshops.polyglot.academy/" @if($workshop->curriculum_endpoint == "https://workshops.polyglot.academy/") selected @endif>https://workshops.polyglot.academy/</option>
+        <option value="https://learn.kemo.network/" @if($workshop->curriculum_endpoint == "https://learn.kemo.network/") selected @endif>https://learn.kemo.network/</option>
       </select>
     </div>
   </div>

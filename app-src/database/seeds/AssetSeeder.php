@@ -22,6 +22,7 @@ class AssetSeeder extends Seeder
           'ansible_networking',
           'security_containers',
           'containers_101',
+          'ocp_devops_101',
           'secure_software_factory',
           'containers_the_hard_way',
           'openshift_101_dcmetromap',

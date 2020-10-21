@@ -126,6 +126,14 @@ class WorkshopSeeder extends Seeder
           'typical_length_in_hours' => 8.00,
           'description' => "Writing your own SELinux policies doesn’t have to be a terrifying prospect! This workshop will walk you through the process of creating a custom policy for a source-compiled application, using the advanced tooling present in Red Hat Enterprise Linux."
         ],
+        [
+          'user_id' => 1,
+          'name' => 'DevOps on OpenShift',
+          'curriculum_slug' => 'ocp_devops_101',
+          'curriculum_endpoint' => 'https://learn.kemo.network/workshops/',
+          'typical_length_in_hours' => 4.00,
+          'description' => "Take a dive into Red Hat OpenShift and deploy containers, build applications straight from source code, and drive CI/CD Pipelines!"
+        ],
 
       ];
 
