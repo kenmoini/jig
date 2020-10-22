@@ -14,5 +14,8 @@ else
     composer dump-autoload
 fi
 
+chown apache:apache -R .
+chmod 775 -R storage
+
 echo "Now log in, create a user, then come back and run:"
 echo "php artisan db:seed"
