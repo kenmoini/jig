@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
+Route::get('ext-login/google', 'Auth\LoginController@redirectToProvider')->name('ext-auth-google');
+Route::get('ext-login/google/callback', 'Auth\LoginController@handleProviderCallback');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('panel')->middleware(['auth', 'verified', 'defaultadmin.usercheck'])->group(function() {
