@@ -15,8 +15,9 @@ class AddSSOColumnsToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
           $table->string('provider')->default('internal');
-          $table->string('provider_id');
+          $table->string('provider_id')->nullable();
           $table->string('password')->nullable()->change();
+          $table->string('provider_avatar')->nullable();
         });
     }
 
@@ -30,6 +31,7 @@ class AddSSOColumnsToUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
           $table->dropColumn('provider');
           $table->dropColumn('provider_id');
+          $table->dropColumn('provider_avatar');
         });
     }
 }
