@@ -50,6 +50,10 @@
         </div>
       </div>
     </div>
+    @if(Auth::user()->provider == "internal")
     <img class="pf-c-avatar" src="https://www.gravatar.com/avatar/{{ md5(trim(Auth::user()->email)) }}" alt="{{ Auth::user()->name }}'s Avatar image" />
+    @else
+    <img class="pf-c-avatar" src="{{ Auth::user()->provider_avatar }}" alt="{{ Auth::user()->name }}'s Avatar image" />
+    @endif
   </div>
 </header>
