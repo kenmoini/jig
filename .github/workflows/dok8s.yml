@@ -1,3 +1,5 @@
+name: Deploy to DigitalOcean Kubernetes
+
 on:
   push:
     branches:
@@ -32,15 +34,6 @@ jobs:
       
     - name: Push image to Container Registry latest tagged
       run: docker push ${{ secrets.CONTAINER_NAME }}:latest
-
-
-  deploy:
-    name: Deploy to kubernetes
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Checkout master
-      uses: actions/checkout@master
     
     - name: Update deployment file
       run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|quay.io/kenmoini/jig:latest|'${{ secrets.CONTAINER_NAME }}':'${TAG}'|' $GITHUB_WORKSPACE/kubernetes/06-deployment.yaml
