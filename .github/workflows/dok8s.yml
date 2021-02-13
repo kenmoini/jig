@@ -1,0 +1,46 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    name: Build, push, and deploy
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout master
+      uses: actions/checkout@master
+
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+    - name: Build container image
+      run: docker build -t ${{ secrets.CONTAINER_NAME }}:$(echo $GITHUB_SHA | head -c7) .
+
+    - name: Tag container image latest
+      run: docker tag ${{ secrets.CONTAINER_NAME }}:$(echo $GITHUB_SHA | head -c7) ${{ secrets.CONTAINER_NAME }}:latest
+
+    - name: Log in to Container Registry
+      run: docker login -u="${{ secrets.REGISTRY_USERNAME }}" -p="${{ secrets.REGISTRY_PASSWORD }}" ${{ secrets.REGISTRY_DOMAIN }}
+
+    - name: Push image to Container Registry
+      run: docker push ${{ secrets.CONTAINER_NAME }}:$(echo $GITHUB_SHA | head -c7)
+      
+    - name: Push image to Container Registry latest tagged
+      run: docker push ${{ secrets.CONTAINER_NAME }}:latest
+
+#    - name: Update deployment file
+#      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/asb/static-example:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
+
+#    - name: Save DigitalOcean kubeconfig with short-lived credentials
+#      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 actions-example-k8s-1-18
+
+#    - name: Deploy to DigitalOcean Kubernetes
+#      run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
+
+#    - name: Verify deployment
+#      run: kubectl rollout status deployment/static-example
