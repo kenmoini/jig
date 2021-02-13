@@ -25,18 +25,6 @@ spec:
           imagePullPolicy: Always
           image: kenmoini/jig:latest
           env:
-            - name: DB_CONNECTION
-              value: mysql
-            - name: DB_HOST
-              value: jig-mysql-svc
-            - name: DB_PORT
-              value: "3306"
-            - name: DB_DATABASE
-              value: jigdb
-            - name: DB_USERNAME
-              value: root
-            - name: DB_PASSWORD
-              value: sup3rS3cr3t
             - name: GENERATE_SQLITE_DB
               value: "false"
             - name: MIGRATE_DATABASE
