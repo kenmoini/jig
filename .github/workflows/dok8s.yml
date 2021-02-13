@@ -32,15 +32,18 @@ jobs:
       
     - name: Push image to Container Registry latest tagged
       run: docker push ${{ secrets.CONTAINER_NAME }}:latest
+    
+    - name: Update deployment file
+      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|quay.io/kenmoini/jig:latest|'${{ secrets.CONTAINER_NAME }}':'${TAG}'|' $GITHUB_WORKSPACE/kubernetes/06-deployment.yml
 
 #    - name: Update deployment file
 #      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/asb/static-example:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
 
-#    - name: Save DigitalOcean kubeconfig with short-lived credentials
-#      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 actions-example-k8s-1-18
+    - name: Save DigitalOcean kubeconfig with short-lived credentials
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 actions-example-k8s-1-18
 
-#    - name: Deploy to DigitalOcean Kubernetes
-#      run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
+    - name: Deploy to DigitalOcean Kubernetes
+      run: kubectl apply -f $GITHUB_WORKSPACE/kubernetes/06-deployment.yml
 
 #    - name: Verify deployment
 #      run: kubectl rollout status deployment/static-example
