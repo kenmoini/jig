@@ -23,7 +23,7 @@ spec:
       containers:
         - name: jig-workshop-worker
           imagePullPolicy: Always
-          image: kenmoini/jig:latest
+          image: quay.io/kenmoini/jig:latest
           env:
             - name: GENERATE_SQLITE_DB
               value: "false"
