@@ -74,6 +74,7 @@ LABEL io.openshift.tags="jig,workshops"
 
 # Update image
 RUN yum update -y --disablerepo=* --enablerepo=ubi-8-appstream --enablerepo=ubi-8-baseos \
+ && yum -y module enable php:7.4 \
  && rm -rf /var/cache/yum
 
 # Install Nginx and PHP
