@@ -36,7 +36,7 @@ The name Jig came from well, wood jigs where one could take a template and an un
 
 To deploy locally on your own development machine, you need:
 
-- PHP 7.2+
+- PHP 7.3+
 - Composer
 - Node/NPM
 
