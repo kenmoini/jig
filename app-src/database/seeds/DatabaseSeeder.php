@@ -11,7 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(WorkshopSeeder::class);
-        $this->call(AssetSeeder::class);
+        $this->call(InitialSetupSeeder::class);
+        //$this->call(WorkshopSeeder::class);
+        //$this->call(AssetSeeder::class);
     }
 }
