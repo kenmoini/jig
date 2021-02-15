@@ -1,5 +1,8 @@
 #!/bin/bash
 
+GIT_CHECKSUM=$(git rev-parse --short HEAD)
+echo "${GIT_CHECKSUM}" > /var/www/html/storage/.gitchecksum
+
 if [ $COPY_ENV_FILE = "true" ]; then
     cp .env.example .env
 fi
@@ -23,9 +26,9 @@ if [ $GENERATE_ENV_KEY = "true" ]; then
     php artisan key:generate
 fi
 
-if [ $MIGRATE_DATABASE = "true" ]; then
-    php artisan migrate --force
-fi
+## if [ $MIGRATE_DATABASE = "true" ]; then
+##     php artisan migrate --force
+## fi
 
 composer dump-autoload
 php artisan clear-compiled
@@ -33,13 +36,15 @@ php artisan cache:clear
 php artisan event:clear
 php artisan optimize:clear
 
-if [ $SEED_INITIAL_ADMIN = "true" ]; then
-    php artisan db:seed --class=AdminUserSeeder
-fi
+php artisan initial-setup:run
 
-if [ $SEED_DATABASE = "true" ]; then
-    php artisan db:seed
-fi
+## if [ $SEED_INITIAL_ADMIN = "true" ]; then
+##     php artisan db:seed --class=AdminUserSeeder
+## fi
+## 
+## if [ $SEED_DATABASE = "true" ]; then
+##     php artisan db:seed
+## fi
 
 # Enable custom nginx config files if they exist
 if [ -f /var/www/html/conf/nginx/nginx.conf ]; then
