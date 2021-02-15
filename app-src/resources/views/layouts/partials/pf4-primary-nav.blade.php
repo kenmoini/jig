@@ -41,13 +41,13 @@
                 <a href="{{ route('panel.get.users.index') }}" class="pf-c-nav__link {{ Route::currentRouteName() == 'panel.get.users.index' ? 'pf-m-current' : '' }}" aria-current="page">Users</a>
               </li>
               <li class="pf-c-nav__item">
-                <a href="#" class="pf-c-nav__link">Groups</a>
+                <a href="{{ route('panel.get.groups.index') }}" class="pf-c-nav__link {{ Route::currentRouteName() == 'panel.get.groups.index' ? 'pf-m-current' : '' }}" aria-current="page">Groups</a>
               </li>
               <li class="pf-c-nav__item">
-                <a href="#" class="pf-c-nav__link">Roles</a>
+                <a href="{{ route('panel.get.roles.index') }}" class="pf-c-nav__link {{ Route::currentRouteName() == 'panel.get.roles.index' ? 'pf-m-current' : '' }}" aria-current="page">Roles</a>
               </li>
               <li class="pf-c-nav__item">
-                <a href="#" class="pf-c-nav__link">Capabilities/Permissions</a>
+                <a href="{{ route('panel.get.capabilities.index') }}" class="pf-c-nav__link {{ Route::currentRouteName() == 'panel.get.capabilities.index' ? 'pf-m-current' : '' }}" aria-current="page">Capabilities/Permissions</a>
               </li>
             </ul>
           </section>

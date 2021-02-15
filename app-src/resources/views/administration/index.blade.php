@@ -25,6 +25,11 @@
             <span class="pf-c-tabs__item-text">Logs</span>
           </button>
         </li>
+        <li class="pf-c-tabs__item @if($active_tab == 'settings'){{ 'pf-m-current' }}@endif" role="presentation">
+          <button class="pf-c-tabs__link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings">
+            <span class="pf-c-tabs__item-text">Settings</span>
+          </button>
+        </li>
       </ul>
       <button class="pf-c-tabs__scroll-button" disabled aria-hidden="true" aria-label="Scroll right">
         <i class="fas fa-angle-right" aria-hidden="true"></i>
@@ -59,6 +64,15 @@
 
           </div>
         </div>
+
+        <div id="settings" class="tab-pane fade in @if($active_tab == 'settings'){!! 'show' !!}@endif" role="tabpanel" aria-labelledby="settings-tab">
+          <h3> Settings <small>General System Configuration</small></h3>
+          <div>
+              GOOD STUFF RIGHT HERE
+          </div>
+
+        </div>
+        
       </div>
 
     </div>
