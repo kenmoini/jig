@@ -1,5 +1,7 @@
 # Jig - Workshop Service Worker
 
+![Deploy to DigitalOcean Kubernetes](https://github.com/kenmoini/jig/workflows/Deploy%20to%20DigitalOcean%20Kubernetes/badge.svg?branch=main)
+
 This is a PHP application built to provide advanced functionality to Red Hat workshops.
 
 By default when run locally it operates via a SQLite database stored locally.  The database can easily be switched to any other relational database with the setting of a few variables.  When operating on Kubernetes/OpenShift, there are assets and the default configuration to support a MySQL database.
