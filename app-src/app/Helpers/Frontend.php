@@ -33,3 +33,12 @@ function displayAlert()
 
   return '';
 }
+
+function displayGitChecksum() {
+  try {
+    $gitChecksum = \File::get(storage_path('.gitchecksum'));
+    echo $gitChecksum;
+  } catch (\Exception $e) {
+    echo "";
+  }
+}
