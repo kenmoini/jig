@@ -5,6 +5,11 @@ use Illuminate\Database\Seeder;
 
 class InitialSetupSeeder extends Seeder
 {
+
+    public $globalSettings = [
+      ['key' => 'user.registration.default-group-id', 'value' => 2, 'description' => 'The default Group ID for newly registered users.']
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -24,6 +29,16 @@ class InitialSetupSeeder extends Seeder
           'value' => '1',
           'description' => 'Flag for if the initial set up has been run',
         ]);
+      }
+      foreach ($this->globalSettings as $setting) {
+        $check = DB::table('settings')->where('key',$setting['key'])->first();
+        if (!$check) {
+          DB::table('settings')->insert([
+            'key' => $setting['key'],
+            'value' => $setting['value'],
+            'description' => $setting['description'],
+          ]);
+        }
       }
 
       // Check for workshop_seeder.ran in Settings
@@ -57,6 +72,8 @@ class InitialSetupSeeder extends Seeder
           ]);
         }
       }
+
+      $authorizationSeeder = $this->call(AuthorizationSeeder::class);
 
       echo 'Initial Setup Database seeding successfully completed!' . "\n";
 
