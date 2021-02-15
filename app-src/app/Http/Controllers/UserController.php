@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Redirect;
+use App\Group;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-      return view('administration.users.create');
+      //$groups = Group::all();
+      //return view('administration.users.create')->with(['groups' => $groups]);
     }
 
     /**
@@ -64,7 +66,8 @@ class UserController extends Controller
     public function edit($id)
     {
       $user = User::where('id', $id)->first();
-      return view('administration.users.edit')->with(['user' => $user]);
+      $groups = Group::all();
+      return view('administration.users.edit')->with(['user' => $user, 'groups' => $groups]);
     }
 
     /**
@@ -106,6 +109,10 @@ class UserController extends Controller
           
           if (!empty($request->input('password'))) {
             $user->password = Hash::make($request->input('password'));
+          }
+          if ($user->groups()->first()->id !== $request->user_group) {
+            $user->groups()->detach($user->groups()->first());
+            $user->groups()->attach($request->user_group);
           }
           $user->save();
 
