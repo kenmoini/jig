@@ -37,6 +37,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # Copy files
 COPY builder-root/ /
 COPY app-src/ /var/www/html/
+COPY .git/refs/heads/main /var/www/html/storage/.gitchecksum
 
 WORKDIR "/var/www/html"
 
@@ -44,9 +45,7 @@ WORKDIR "/var/www/html"
 RUN composer install
 
 RUN npm install \
- && npm run dev \
- && GIT_CHECKSUM=$(git rev-parse --short HEAD) \
- && echo "${GIT_CHECKSUM}" > /var/www/html/storage/.gitchecksum
+ && npm run dev
 
 ## Finished building application
 
