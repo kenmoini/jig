@@ -27,7 +27,7 @@ data:
 
     BROADCAST_DRIVER=log
     CACHE_DRIVER=database
-    QUEUE_CONNECTION=sync
+    QUEUE_CONNECTION=database
     SESSION_DRIVER=database
     SESSION_LIFETIME=120
 
