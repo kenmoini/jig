@@ -42,4 +42,8 @@ class User extends Authenticatable {
   public function getLastLoginAttribute() {
     return Activity::where(['activity_type' => 'login', 'actor_id' => $this->id])->orderBy('created_at', 'desc')->first();
   }
+
+  public function groups() {
+      return $this->belongsToMany(Group::class);
+  }
 }
