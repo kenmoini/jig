@@ -65,7 +65,9 @@ Route::prefix('panel')->middleware(['auth', 'verified', 'defaultadmin.usercheck'
   // Administration
   Route::prefix('admin')->group(function() {
     // |_ General
-    Route::get('general', 'AdministrationController@index')->name('panel.get.administration.index');
+    //Route::get('general', 'AdministrationController@index')->name('panel.get.administration.index');
+    Route::get('general', 'LogReaderController@index')->name('panel.get.administration.index');
+    Route::post('command', 'LogReaderController@index')->name('panel.post.administration.command');
 
     // |_ Users
     Route::get('users', 'UserController@index')->name('panel.get.users.index');
