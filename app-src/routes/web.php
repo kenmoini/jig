@@ -75,8 +75,21 @@ Route::prefix('panel')->middleware(['auth', 'verified', 'defaultadmin.usercheck'
     Route::post('users/edit/{id}', 'UserController@update')->name('panel.post.users.update');
     Route::get('users/show/{id}', 'UserController@show')->name('panel.get.users.show');
 
+    // |_ Groups
+    Route::get('groups', 'GroupController@index')->name('panel.get.groups.index');
+    Route::get('groups/edit/{id}', 'GroupController@edit')->name('panel.get.groups.edit');
+    Route::post('groups/edit/{id}', 'GroupController@update')->name('panel.post.groups.update');
+    Route::get('groups/show/{id}', 'GroupController@show')->name('panel.get.groups.show');
+
     // |_ Roles
     Route::get('roles', 'RoleController@index')->name('panel.get.roles.index');
+    Route::get('roles/edit/{id}', 'RoleController@edit')->name('panel.get.roles.edit');
+    Route::post('roles/edit/{id}', 'RoleController@update')->name('panel.post.roles.update');
+    Route::get('roles/show/{id}', 'RoleController@show')->name('panel.get.roles.show');
+
+    // |_ Capabilities
+    Route::get('capabilities', 'CapabilityController@index')->name('panel.get.capabilities.index');
+    Route::get('capabilities/show/{id}', 'CapabilityController@show')->name('panel.get.capabilities.show');
   });
 
 });
