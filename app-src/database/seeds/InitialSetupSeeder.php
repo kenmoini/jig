@@ -17,7 +17,6 @@ class InitialSetupSeeder extends Seeder
      */
     public function run()
     {
-      
       // Check for global.initial_setup_ran in Settings
       $initialSetupRan = Setting::where('key', 'global.initial_setup_ran')->get();
       if ($initialSetupRan->count()) {
