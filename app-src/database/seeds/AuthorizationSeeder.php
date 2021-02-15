@@ -12,6 +12,7 @@ class AuthorizationSeeder extends Seeder
         ['name' => 'Red Hatters - Basic', 'slug' => 'red-hatters-basic', 'description' => 'Primary user group for Red Hatters'],
         ['name' => 'Red Hatters - Proctor', 'slug' => 'red-hatters-proctor', 'description' => 'Red Hatters who can proctor workshop events'],
         ['name' => 'Red Hatters - Operator', 'slug' => 'red-hatters-operator', 'description' => 'Red Hatters who can operate Jig'],
+        ['name' => 'Guest', 'slug' => 'guest', 'description' => 'Limited catch-all group for unknown guest users'],
     ];
 
     public $roles = [
@@ -19,6 +20,7 @@ class AuthorizationSeeder extends Seeder
         ['name' => 'Limited Admin', 'slug' => 'limited-admin', 'description' => 'Limited administrative capabilities, less those that can touch the system and RBAC'],
         ['name' => 'Workshop Proctor', 'slug' => 'workshop-proctor', 'description' => 'Capabilities needed to operate as a Workshop Proctor'],
         ['name' => 'Basic', 'slug' => 'basic', 'description' => 'Basic capabilities, mostly just view'],
+        ['name' => 'Guest', 'slug' => 'guest', 'description' => 'Limited permissions, guest account access'],
     ];
 
     public $capabilities = [
@@ -110,6 +112,7 @@ class AuthorizationSeeder extends Seeder
             ['groupSlug' => 'red-hatters-basic', 'roleSlug' => 'basic'],
             ['groupSlug' => 'red-hatters-operator', 'roleSlug' => 'limited-admin'],
             ['groupSlug' => 'red-hatters-proctor', 'roleSlug' => 'workshop-proctor'],
+            ['groupSlug' => 'guest', 'roleSlug' => 'guest'],
         ];
         foreach ($groupRoles as $groupRole) {
             $group = DB::table('groups')->where('slug', $groupRole['groupSlug'])->first();
@@ -129,6 +132,8 @@ class AuthorizationSeeder extends Seeder
             $allFlatCapabilities[] = $cap['key'];
         }
         $roleCapabilities = [
+            ['roleSlug' => 'guest', 'capabilities' => [
+            ]],
             ['roleSlug' => 'basic', 'capabilities' => [
                 'admin.users.view',
                 'admin.groups.view',
