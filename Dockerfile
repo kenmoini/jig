@@ -44,7 +44,9 @@ WORKDIR "/var/www/html"
 RUN composer install
 
 RUN npm install \
- && npm run dev
+ && npm run dev \
+ && GIT_CHECKSUM=$(git rev-parse --short HEAD) \
+ && echo "${GIT_CHECKSUM}" > /var/www/html/storage/.gitchecksum
 
 ## Finished building application
 

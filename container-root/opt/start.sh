@@ -1,8 +1,5 @@
 #!/bin/bash
 
-GIT_CHECKSUM=$(git rev-parse --short HEAD)
-echo "${GIT_CHECKSUM}" > /var/www/html/storage/.gitchecksum
-
 if [ $COPY_ENV_FILE = "true" ]; then
     cp .env.example .env
 fi
