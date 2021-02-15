@@ -41,7 +41,13 @@
                 <a href="{{ route('panel.get.users.index') }}" class="pf-c-nav__link {{ Route::currentRouteName() == 'panel.get.users.index' ? 'pf-m-current' : '' }}" aria-current="page">Users</a>
               </li>
               <li class="pf-c-nav__item">
+                <a href="#" class="pf-c-nav__link">Groups</a>
+              </li>
+              <li class="pf-c-nav__item">
                 <a href="#" class="pf-c-nav__link">Roles</a>
+              </li>
+              <li class="pf-c-nav__item">
+                <a href="#" class="pf-c-nav__link">Capabilities/Permissions</a>
               </li>
             </ul>
           </section>
