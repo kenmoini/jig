@@ -37,8 +37,8 @@ function displayAlert()
 function displayGitChecksum() {
   try {
     $gitChecksum = \File::get(storage_path('.gitchecksum'));
-    echo $gitChecksum;
+    echo substr(trim($gitChecksum), 0, 7);
   } catch (\Exception $e) {
-    echo "";
+    //echo "";
   }
 }
