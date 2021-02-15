@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Group;
 use App\User;
 use App\Setting;
 use Carbon\Carbon;
@@ -119,6 +120,8 @@ class InitialSetup extends BaseCommand
       //=========================================================================================
       // Check for DB Users Table - Number of Rows > 0
       // Admin user generation only occurs automatically if there are no users in teh database at all, ie fresh OOTB install
+      $adminUserGenerated = false;
+      $adminUserID = 0;
       try {
         $user = User::where('id', '>', 0)->first();
         if ($user) {
@@ -126,6 +129,7 @@ class InitialSetup extends BaseCommand
         }
         else {
           $this->info('Users table is empty, running initial admin generation...');
+          $adminUserGenerated = true;
           
           $user = new User;
           $user->name = env('ADMIN_USER_NAME', 'Administrator');
@@ -149,6 +153,7 @@ class InitialSetup extends BaseCommand
           
           $user->password = Hash::make($password);
           $user->save();
+          $adminUserID = $user->id;
           $this->info('Admin user ' . $user->email . ' generated!');
         }
       } catch (\Exception $e) {
@@ -160,5 +165,22 @@ class InitialSetup extends BaseCommand
       $initialSetupSeeder = Artisan::call('db:seed', [
         '--class' => 'InitialSetupSeeder'
       ]);
+
+      //=========================================================================================
+      // Add admin user to Admin group if created
+      try {
+        if ($adminUserGenerated) {
+          $this->info('Users was generated, adding to default Administrators group...');
+          
+          $user = User::where('id', $adminUserID)->first();
+
+          $defaultGroup = Group::where('id', 1)->first();
+
+          $user->groups()->attach($defaultGroup);
+          $this->info('User added to Administrators group!');
+        }
+      } catch (\Exception $e) {
+        die("Exception while trying to access DB.  Please check your configuration. error:" . $e );
+      }
     }
 }
