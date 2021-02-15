@@ -70,7 +70,7 @@
                     Jig - Workshop Worker
                 </div>
 
-                <div class="links">
+                <div class="links m-b-md">
                     @auth
                         <a href="{{ route('panel.get.dashboard.index') }}">Dashboard</a>
                     @else
@@ -80,6 +80,9 @@
                             <a href="{{ route('register') }}">Register</a>
                         @endif
                     @endauth
+                </div>
+                <div class="checksum" style="font-size:small;color:lightgrey;position:absolute;bottom:2rem;left:calc(50% - 50px);width:100px;text-align:center;">
+                  {{ displayGitChecksum() }}
                 </div>
             </div>
         </div>
