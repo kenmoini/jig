@@ -16,6 +16,21 @@
                         @csrf
 
                         <div class="pf-c-form__group">
+                          <div class="pf-c-form__group-control">
+                            <a href="{{ route('ext-auth-google') }}" class="pf-c-button pf-m-secondary">
+                              <img src="/img/google-icon.png" style="width:20px;height:20px;position: relative;top: 4px;margin-right: 11px;">
+                              Red Hatters: Log in with Google
+                            </a>
+                          </div>
+                        </div>
+
+                        <div class="pf-c-form__group">
+                          <div class="pf-c-form__group-control">
+                            <hr />
+                          </div>
+                        </div>
+
+                        <div class="pf-c-form__group">
                           <div class="pf-c-form__group-label">
                             <label class="pf-c-form__label" for="name">
                               <span class="pf-c-form__label-text">{{ __('Name') }}</span>
