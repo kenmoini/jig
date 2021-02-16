@@ -33,7 +33,19 @@ class Role extends Model
         return $this->belongsToMany(Group::class);
     }
 
+    public function users() {
+        return $this->belongsToMany(User::class);
+    }
+
     public function capabilities() {
         return $this->belongsToMany(Capability::class);
+    }
+
+    public function capabilitiesList() {
+        $caps = [];
+        foreach ($this->capabilities()->get() as $capability) {
+            $caps[] = $capability->key;
+        }
+        return array_unique($caps);
     }
 }

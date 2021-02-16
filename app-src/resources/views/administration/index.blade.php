@@ -42,35 +42,49 @@
       <div class="tab-content">
 
         <div id="general" class="tab-pane fade in @if(empty($active_tab) || (isset($active_tab) && $active_tab == 'general')){!! 'show' !!}@endif" role="tabpanel" aria-labelledby="general-tab">
-          <h3> General <small>General Administrative Information</small></h3>
+
+          @if(!Auth::user()->hasPermission('admin.general.view-index'))
+          <h3> Permission Denied <small>You are not authorized to access this resource</small></h3>
+          @else
+          <h3>General <small>General Administrative Information</small></h3>
           <div>
               GOOD STUFF RIGHT HERE
           </div>
+          @endif
 
         </div>
 
         <div id="commands" class="tab-pane fade in @if($active_tab == 'commands'){!! 'show' !!}@endif" role="tabpanel" aria-labelledby="commands-tab">
-          <h3><i class="voyager-terminal"></i> Commands <small>Available PHP Artisan Commands</small></h3>
+          @if(!Auth::user()->hasPermission('admin.general.view-commands'))
+          <h3> Permission Denied <small>You are not authorized to access this resource</small></h3>
+          @else
+          <h3>Commands <small>Available PHP Artisan Commands</small></h3>
           <div id="command_lists">
               @include('administration.includes.commands')
           </div>
-
+          @endif
         </div>
+
         <div id="logs" class="tab-pane fade in @if($active_tab == 'logs'){!! 'show' !!}@endif" role="tabpanel" aria-labelledby="logs-tab">
+          @if(!Auth::user()->hasPermission('admin.general.view-logs'))
+          <h3> Permission Denied <small>You are not authorized to access this resource</small></h3>
+          @else
           <h3>Logs <small>Because Kubernetes is hard.</small></h3>
           <div class="row" id="logsHolder">
-
               @include('administration.includes.logs')
-
           </div>
+          @endif
         </div>
 
         <div id="settings" class="tab-pane fade in @if($active_tab == 'settings'){!! 'show' !!}@endif" role="tabpanel" aria-labelledby="settings-tab">
-          <h3> Settings <small>General System Configuration</small></h3>
+          @if(!Auth::user()->hasPermission('admin.general.view-settings'))
+          <h3> Permission Denied <small>You are not authorized to access this resource</small></h3>
+          @else
+          <h3>Settings <small>General System Configuration</small></h3>
           <div>
               GOOD STUFF RIGHT HERE
           </div>
-
+          @endif
         </div>
         
       </div>
@@ -98,6 +112,7 @@
   }
   .tab-pane > h3{
     font-size: 1.5rem;
+    margin: 1rem 0;
   }
   /*
   .voyager .compass .nav-tabs{
@@ -334,53 +349,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3111111', e
       border-radius:3px;
   }
 
-  #fonts ul{
-      list-style:none;
-      display:flex;
-      padding-left:10px;
-      flex-wrap:wrap;
-      justify-content:flex-start;
-  }
-
-  #fonts .icon{
-      float: left;
-      padding: 2px;
-      font-size: 20px;
-      padding-right: 10px;
-      position: absolute;
-      left: 0px;
-  }
-
-  #fonts li{
-      flex: 1;
-      max-width:212px;
-      padding: 10px;
-      padding-left: 30px;
-      position: relative;
-  }
-
-  #fonts .voyager-angle-down{
-      display:block;
-  }
-
-  #fonts h2{
-      font-size: 12px;
-      padding: 20px;
-      padding-top: 0px;
-      font-weight: bold;
-      padding-left:5px;
-  }
-
-  #fonts h2:nth-child(2){
-      padding-top:20px;
-  }
-
-  #fonts input{
-      border-radius: 3px;
-      border: 1px solid #f1f1f1;
-      padding: 3px 7px;
-  }
-
   #logs .level .glyphicon{
       float:left;
   }
@@ -484,7 +452,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3111111', e
     #commands h3{
       width: 100%;
       clear: both;
-      margin-bottom: 20px;
     }
 
     #commands h3 i{

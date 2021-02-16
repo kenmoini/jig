@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('panel.events.edit'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Create an Event')
 
 @section('headerScripts')
@@ -574,3 +583,5 @@
   });
 </script>
 @endsection
+
+@endif

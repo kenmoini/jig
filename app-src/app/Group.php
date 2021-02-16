@@ -37,7 +37,13 @@ class Group extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    public function capabilities() {
-        return $this->belongsToMany(Capability::class);
+    public function capabilitiesList() {
+        $caps = [];
+        foreach ($this->roles()->get() as $role) {
+            foreach ($role->capabilities()->get() as $capability) {
+                $caps[] = $capability->key;
+            }
+        }
+        return array_unique($caps);
     }
 }

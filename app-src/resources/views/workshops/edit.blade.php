@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('panel.workshops.edit'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Edit Workshop - ' . $workshop['name'])
 
 @section('content')
@@ -81,3 +90,5 @@
 @section('footerScripts')
 
 @endsection
+
+@endif

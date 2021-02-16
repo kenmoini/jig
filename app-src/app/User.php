@@ -44,6 +44,24 @@ class User extends Authenticatable {
   }
 
   public function groups() {
-      return $this->belongsToMany(Group::class);
+    return $this->belongsToMany(Group::class);
+  }
+
+  public function capabilitiesList() {
+    $caps = [];
+    foreach ($this->groups()->get() as $group) {
+      foreach ($group->roles()->get() as $role) {
+        foreach ($role->capabilities()->get() as $capability) {
+          $caps[] = $capability->key;
+        }
+      }
+    }
+    return array_unique($caps);
+  }
+  public function hasPermission($capabilityKey) {
+    if (in_array($capabilityKey, $this->capabilitiesList())) {
+      return true;
+    }
+    return false;
   }
 }

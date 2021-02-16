@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('admin.roles.view'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Administration - Roles')
 
 @section('content')
@@ -46,7 +55,7 @@
         <td role="cell" data-label="Role name">{{ $role->name }}</td>
         <td role="cell" data-label="Number of groups in role">{{ $role->groups()->count() }}</td>
         <td role="cell" data-label="Number of capabilites in role">{{ $role->capabilities()->count() }}</td>
-        <td role="cell" data-label="Actions"><a href="{{ route('panel.get.roles.edit', $role->id) }}" class="pf-c-button">Edit</a><a href="{{ route('panel.get.roles.show', $role->id) }}" class="pf-c-button">View</a></td>
+        <td role="cell" data-label="Actions"><a href="{{ route('panel.get.roles.edit', $role->id) }}" class="pf-c-button pf-u-display-none">Edit</a><a href="{{ route('panel.get.roles.show', $role->id) }}" class="pf-c-button">View</a></td>
       </tr>
       @endforeach
     @else
@@ -72,3 +81,5 @@
   });
 </script>
 @endsection
+
+@endif

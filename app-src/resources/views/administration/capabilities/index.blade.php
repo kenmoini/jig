@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('admin.capabilities.view'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Administration - Capabilities')
 
 @section('content')
@@ -70,3 +79,5 @@
   });
 </script>
 @endsection
+
+@endif

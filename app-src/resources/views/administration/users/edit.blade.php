@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('admin.users.edit'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Edit User - ' . $user->name)
 
 @section('content')
@@ -110,3 +119,5 @@
 @section('footerScripts')
 
 @endsection
+
+@endif

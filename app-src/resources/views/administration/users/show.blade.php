@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('admin.users.view'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Viewing User - ' . $user->name)
 
 @section('content')
@@ -46,6 +55,18 @@
       <input class="pf-c-form-control" style="text-transform:capitalize;" disabled="disabled" type="text" id="auth-provider" name="auth-provider" value="{{ $user->provider }}" aria-label="User Identity Provider" />
     </div>
   </div>
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label">
+      <label class="pf-c-form__label" for="users">
+        <span class="pf-c-form__label-text">Effective Capabilities</span>
+      </label>
+    </div>
+    <div class="pf-c-form__group-control">
+    @foreach($user->capabilitiesList() as $cap)
+    {{ $cap }}<br />
+    @endforeach
+    </div>
+  </div>
   
 </div>
 
@@ -55,3 +76,5 @@
 @section('footerScripts')
 
 @endsection
+
+@endif
