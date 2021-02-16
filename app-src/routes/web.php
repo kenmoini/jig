@@ -60,7 +60,7 @@ Route::prefix('panel')->middleware(['auth', 'verified', 'defaultadmin.usercheck'
   Route::post('students/destroy/{id}', 'StudentController@destroy')->name('panel.post.students.destroy');
 
   // Activity Reports (Per student, per user/proctor associated events, per event, per workshop - time series and cumulative/avg analysis)
-  Route::get('activity', 'ActivityController@index')->name('panel.get.activity.index');
+  Route::get('activity/{reportType?}/{reportTarget?}', 'ActivityController@index')->name('panel.get.activity.index');
 
   // Administration
   Route::prefix('admin')->group(function() {
