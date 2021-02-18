@@ -87,6 +87,23 @@ class AssetSeeder extends Seeder
               'expiration' => 7,
             ]);
             $assetUserIDCookie->save();
+
+            $assetStudentPasswordCookie = new Asset;
+            $assetStudentPasswordCookie->workshop_id = $workshop->id;
+            $assetStudentPasswordCookie->user_id = 1;
+            $assetStudentPasswordCookie->created_at = Carbon::now()->toDateTimeString();
+            $assetStudentPasswordCookie->updated_at = Carbon::now()->toDateTimeString();
+            $assetStudentPasswordCookie->asset_type = "cookie";
+            $assetStudentPasswordCookie->name = "Student Password Cookie";
+            $assetStudentPasswordCookie->slug = Str::slug($assetStudentPasswordCookie->name);
+            $assetStudentPasswordCookie->asset_data = json_encode([
+              'key' => "studentPassword",
+              'default_value' => "r3dh4t1!",
+              'domain' => $workshop->base_domain,
+              'path' => $workshop->workshop_path,
+              'expiration' => 7,
+            ]);
+            $assetStudentPasswordCookie->save();
           }
         }
     }
