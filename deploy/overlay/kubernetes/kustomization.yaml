@@ -1,2 +1,4 @@
 bases:
 - ../../base
+resources:
+- 08-ingress.yaml

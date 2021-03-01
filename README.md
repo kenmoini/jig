@@ -170,8 +170,26 @@ kubectl apply -f kubernetes/07-service.yaml
 kubectl apply -f kubernetes/08-ingress.yaml
 ```
 
-### Deploy to OpenShift
-
+## Deploy using kustomize 
+**Validate**
 ```
-oc apply -f openshift/01-namespace.yaml
+kustomize build deploy/overlay/kubernetes/ | more
+```
+
+### Deploy to kubernetes
+
+**Deploy**
+```
+kustomize build deploy/overlay/kubernetes/ | oc create -f
+```
+
+### Deploy to OpenShift
+**Validate**
+```
+kustomize build deploy/overlay/openshift/ | more
+```
+
+**Deploy**
+```
+kustomize build deploy/overlay/openshift/ | oc create -fs
 ```
