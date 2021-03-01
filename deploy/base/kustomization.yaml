@@ -1,9 +1,6 @@
 
 resources:
 - 01-namespace.yaml
-- 02-mysql-pv.yaml
-- 03-mysql-deployment.yaml
-- 04-mysql-services.yaml
 - 05-configmap.yaml
 - 06-deployment.yaml
 - 07-service.yaml
