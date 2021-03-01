@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
+use App\Group;
+use App\Setting;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -61,6 +63,15 @@ class LoginController extends Controller
       // http://localhost:8000/ext-login/google
       $userSocial =   Socialite::driver('google')->stateless()->user();
       $users      =   User::where(['email' => $userSocial->getEmail()])->first();
+      
+      $defaultGroupSetting = Setting::where('key', 'user.registration.default-group-id')->first();
+      if ($defaultGroupSetting) {
+        $defaultGroup = Group::where('id', $defaultGroupSetting->value)->first();
+      }
+      else {
+        $defaultGroup = Group::where('id', 1)->first();
+      }
+
 
       if($users){
         Auth::login($users);
@@ -74,6 +85,8 @@ class LoginController extends Controller
           'provider_id'     => $userSocial->getId(),
           'provider'        => 'google',
         ]);
+        $user->groups()->attach($defaultGroup);
+        
         Auth::login($user);
         return redirect($this->redirectTo);
       }

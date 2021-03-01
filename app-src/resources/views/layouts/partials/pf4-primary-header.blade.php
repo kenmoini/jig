@@ -42,7 +42,10 @@
 
                 <section class="pf-c-page__main-section pf-m-light">
                   <div class="pf-c-content">
-                    <h1>@yield('pageTitle')</h1>
+                    <h1>
+                      @yield('pageTitle')
+                      @yield('pageAction')
+                    </h1>
                   </div>
                 </section>
                 <section class="pf-c-page__main-section" id="main-page-content">

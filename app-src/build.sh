@@ -10,12 +10,10 @@ if [ -f "$FILE" ]; then
 else
     cp .env.example .env
     php artisan key:generate
-    php artisan migrate
     composer dump-autoload
 fi
 
+php artisan initial-setup:run
+
 chown apache:apache -R .
 chmod 775 -R storage
-
-echo "Now log in, create a user, then come back and run:"
-echo "php artisan db:seed"

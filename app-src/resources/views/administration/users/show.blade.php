@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('admin.users.view'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Viewing User - ' . $user->name)
 
 @section('content')
@@ -26,6 +35,38 @@
       <input class="pf-c-form-control" disabled="disabled" type="email" id="email" name="email" value="{{ $user->email }}" aria-label="User email" />
     </div>
   </div>
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label">
+      <label class="pf-c-form__label" for="group">
+        <span class="pf-c-form__label-text">Group</span>
+      </label>
+    </div>
+    <div class="pf-c-form__group-control">
+      <input class="pf-c-form-control" disabled="disabled" type="text" id="group" name="group" value="{{ $user->groups()->first()->name }}" aria-label="User group" />
+    </div>
+  </div>
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label">
+      <label class="pf-c-form__label" for="auth-provider">
+        <span class="pf-c-form__label-text">Auth Provider</span>
+      </label>
+    </div>
+    <div class="pf-c-form__group-control">
+      <input class="pf-c-form-control" style="text-transform:capitalize;" disabled="disabled" type="text" id="auth-provider" name="auth-provider" value="{{ $user->provider }}" aria-label="User Identity Provider" />
+    </div>
+  </div>
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label">
+      <label class="pf-c-form__label" for="users">
+        <span class="pf-c-form__label-text">Effective Capabilities</span>
+      </label>
+    </div>
+    <div class="pf-c-form__group-control">
+    @foreach($user->capabilitiesList() as $cap)
+    {{ $cap }}<br />
+    @endforeach
+    </div>
+  </div>
   
 </div>
 
@@ -35,3 +76,5 @@
 @section('footerScripts')
 
 @endsection
+
+@endif

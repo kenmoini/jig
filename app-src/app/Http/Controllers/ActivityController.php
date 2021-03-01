@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
+use App\User;
+use App\Workshop;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -11,9 +14,43 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($reportType=false, $reportTarget=false)
     {
-      return view('activity.index');
+        $data = [];
+        if ($reportType) {
+            $data['reportType'] = $reportType;
+            if ($reportTarget && is_numeric($reportTarget)) {
+                $data['reportTarget'] = $reportTarget;
+            }
+            switch ($reportType) {
+                case "user":
+                    if (isset($data['reportTarget'])) {
+                        $data['user'] = User::where('id', $data['reportTarget'])->first();
+                    }
+                    else {
+                        $data['users'] = User::all();
+                    }
+                break;
+                case "workshop":
+                    if (isset($data['reportTarget'])) {
+                        $data['workshop'] = Workshop::where('id', $data['reportTarget'])->first();
+                    }
+                    else {
+                        $data['workshops'] = Workshop::all();
+                    }
+                break;
+                case "event":
+                    if (isset($data['reportTarget'])) {
+                        $data['event'] = Event::where('id', $data['reportTarget'])->first();
+                    }
+                    else {
+                        $data['events'] = Event::all();
+                    }
+                break;
+            }
+        }
+
+        return view('activity.index')->with(['data' => $data]);
     }
 
     /**

@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('panel.events.edit'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Create an Event')
 
 @section('headerScripts')
@@ -30,17 +39,6 @@
   @csrf
   <div class="pf-c-form__group">
     <div class="pf-c-form__group-label">
-      <label class="pf-c-form__label" for="event_title">
-        <span class="pf-c-form__label-text">Event Title</span>
-        <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
-      </label>
-    </div>
-    <div class="pf-c-form__group-control">
-      <input class="pf-c-form-control" type="text" id="event_title" name="event_title" required />
-    </div>
-  </div>
-  <div class="pf-c-form__group">
-    <div class="pf-c-form__group-label">
       <label class="pf-c-form__label" for="event_workshop_id">
         <span class="pf-c-form__label-text">Event Workshop</span>
         <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
@@ -53,6 +51,17 @@
           <option value="{{ $workshop->id }}">{{ $workshop->name }}</option>
         @endforeach
       </select>
+    </div>
+  </div>
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label">
+      <label class="pf-c-form__label" for="event_title">
+        <span class="pf-c-form__label-text">Event Title</span>
+        <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
+      </label>
+    </div>
+    <div class="pf-c-form__group-control">
+      <input class="pf-c-form-control" type="text" id="event_title" name="event_title" required />
     </div>
   </div>
   <div class="" id="eventDetailsHolder">
@@ -574,3 +583,5 @@
   });
 </script>
 @endsection
+
+@endif

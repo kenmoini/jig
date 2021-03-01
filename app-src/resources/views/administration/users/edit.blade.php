@@ -1,5 +1,14 @@
 @extends('layouts.pf4-primary')
 
+@if(!Auth::user()->hasPermission('admin.users.edit'))
+
+@section('pageTitle', 'Permission Denied')
+
+@section('content')
+<p class="pf-u-text-center">Permission Denied</p>
+@endsection
+@else
+
 @section('pageTitle', 'Edit User - ' . $user->name)
 
 @section('content')
@@ -72,6 +81,27 @@
       <input id="password-confirm" type="password" class="pf-c-form-control" name="password_confirmation" required autocomplete="new-password">
     </div>
   </div>
+
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label"></div>
+    <div class="pf-c-form__group-control">
+      <hr/>
+    </div>
+  </div>
+  <div class="pf-c-form__group">
+    <div class="pf-c-form__group-label">
+      <label class="pf-c-form__label" for="user_group">
+        <span class="pf-c-form__label-text">User Group</span>
+      </label>
+    </div>
+    <div class="pf-c-form__group-control">
+      <select id="user_group" name="user_group" class="pf-c-form-control">
+        @foreach($groups as $group)
+        <option @if($group->id === $user->groups()->first()->id){{ 'selected="selected"' }}@endif value="{{ $group->id }}">{{ $group->name }}</option>
+        @endforeach
+      </select>
+    </div>
+  </div>
   
   <div class="pf-c-form__group pf-m-action">
     <div class="pf-c-form__actions">
@@ -89,3 +119,5 @@
 @section('footerScripts')
 
 @endsection
+
+@endif

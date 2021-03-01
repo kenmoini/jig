@@ -1,5 +1,7 @@
 # Jig - Workshop Service Worker
 
+![Deploy to DigitalOcean Kubernetes](https://github.com/kenmoini/jig/workflows/Deploy%20to%20DigitalOcean%20Kubernetes/badge.svg?branch=main)
+
 This is a PHP application built to provide advanced functionality to Red Hat workshops.
 
 By default when run locally it operates via a SQLite database stored locally.  The database can easily be switched to any other relational database with the setting of a few variables.  When operating on Kubernetes/OpenShift, there are assets and the default configuration to support a MySQL database.
@@ -31,12 +33,11 @@ The name Jig came from well, wood jigs where one could take a template and an un
 
 ## How to use
 
-
 ### Deploy Natively
 
 To deploy locally on your own development machine, you need:
 
-- PHP 7.2+
+- PHP 7.3+
 - Composer
 - Node/NPM
 
@@ -92,10 +93,8 @@ npm run dev
 cp .env.example .env # Modify to suit your needs
 touch db.sqlite # or use the MariaDB as done in a fresh set up
 php artisan key:generate
-php artisan migrate
 composer dump-autoload
-php artisan db:seed --class=AdminUserSeeder #optional, or create a user before seeding
-php artisan db:seed
+php artisan initial-setup:run
 ```
 
 Set your HTTP server root to the `public/` sub-directory.  Oe run `php artisan serve`
@@ -121,20 +120,24 @@ podman run -p 8080:8080 jig
 
 Navigate to `http://localhost:8080` to view the site.
 
+#### Initial Setup
+
+When deployed as a container, the `/opt/start.sh` file which executes the container-bound process will call `php artisan initial-setup:run` and will handle Migrations, Initial Admin User Generation, and Database Seeding gracefully.
+
 #### Configuring the Container
 
 There are a number of environmental variable that can be set on container start:
 
-| Variable                     | Default | Description                                                               |
-|------------------------------|---------|---------------------------------------------------------------------------|
-| COPY_ENV_FILE                | true    | Copies the `.env.example` file to `.env`                                  |
-| COPY_ENV_FILE_FROM_CONFIGMAP | false   | Copies the `/var/html/data/.env` file provided by a ConfigMap to `.env`   |
-| GENERATE_ENV_KEY             | true    | Generates a new application key in the .env file                          |
-| GENERATE_SHOW_NEW_ENV_KEY    | false   | Generates a new application key and prints without setting                |
-| GENERATE_SQLITE_DB           | true    | Generates a SQLite DB File to use                                         |
-| MIGRATE_DATABASE             | true    | Runs Database Migrations                                                  |
-| SEED_INITIAL_ADMIN           | true    | Seeds the database with initial Admin user (admin@admin.com / Passw0rd1!) |
-| SEED_DATABASE                | true    | Seeds the database with Workshops and their needed Assets                 |
+| Variable [optional]          | Default                | Description                                                                                                                                                                          |
+|------------------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| COPY_ENV_FILE                | true                   | Copies the `.env.example` file to `.env`                                                                                                                                             |
+| COPY_ENV_FILE_FROM_CONFIGMAP | false                  | Copies the `/var/html/data/.env` file provided by a ConfigMap to `.env`                                                                                                              |
+| GENERATE_ENV_KEY             | true                   | Generates a new application key in the .env file                                                                                                                                     |
+| GENERATE_SHOW_NEW_ENV_KEY    | false                  | Generates a new application key and prints without setting                                                                                                                           |
+| GENERATE_SQLITE_DB           | true                   | Generates a SQLite DB File to use                                                                                                                                                    |
+| [ADMIN_USER_NAME]            | 'Administrator'        | Initial Admin User's Name                                                                                                                                                            |
+| [ADMIN_USER_EMAIL]           | 'admin@admin.com'      | Initial Admin User's Email                                                                                                                                                           |
+| [ADMIN_USER_PASSWORD]        | Random or 'Passw0rd1!' | Initial Admin User's Password, if not set then password will be randomly generated and saved to app-src/storage/app/generated_admin_password if path is writable, defaults otherwise |
 
 Augment the deployment of the container as such:
 
@@ -169,4 +172,4 @@ kubectl apply -f kubernetes/08-ingress.yaml
 
 ### Deploy to OpenShift
 
-*Coming soon...*
+*Coming soon...though you can also just use most of the K8s manifests upto the ingress, might need to swap that out for a Route object...will have a Template or two soon...*

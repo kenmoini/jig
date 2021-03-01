@@ -15,6 +15,7 @@ ENV COPY_ENV_FILE=true \
 
 # Update image
 RUN yum update -y --disablerepo=* --enablerepo=ubi-8-appstream --enablerepo=ubi-8-baseos \
+ && yum -y module enable php:7.4 \
  && rm -rf /var/cache/yum
 
 # Install NPM and PHP
@@ -36,6 +37,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # Copy files
 COPY builder-root/ /
 COPY app-src/ /var/www/html/
+COPY .git/refs/heads/main /var/www/html/storage/.gitchecksum
 
 WORKDIR "/var/www/html"
 
@@ -73,6 +75,7 @@ LABEL io.openshift.tags="jig,workshops"
 
 # Update image
 RUN yum update -y --disablerepo=* --enablerepo=ubi-8-appstream --enablerepo=ubi-8-baseos \
+ && yum -y module enable php:7.4 \
  && rm -rf /var/cache/yum
 
 # Install Nginx and PHP
