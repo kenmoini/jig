@@ -180,7 +180,7 @@ kustomize build deploy/overlay/kubernetes/ | more
 
 **Deploy**
 ```
-kustomize build deploy/overlay/kubernetes/ | oc create -f
+kustomize build deploy/overlay/kubernetes/ | kubectl create -f -
 ```
 
 ### Deploy to OpenShift
@@ -191,5 +191,5 @@ kustomize build deploy/overlay/openshift/ | more
 
 **Deploy**
 ```
-kustomize build deploy/overlay/openshift/ | oc create -fs
+kustomize build deploy/overlay/openshift/ | oc create -f -
 ```
