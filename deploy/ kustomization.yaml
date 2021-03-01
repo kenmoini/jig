@@ -1,0 +1,5 @@
+commonLabels:
+  app: my-jig
+resources:
+- ../kubernetes/01-namespace.yaml
+- ../kubernetes/02-mysql-pv.yaml

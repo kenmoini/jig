@@ -172,4 +172,6 @@ kubectl apply -f kubernetes/08-ingress.yaml
 
 ### Deploy to OpenShift
 
-*Coming soon...though you can also just use most of the K8s manifests upto the ingress, might need to swap that out for a Route object...will have a Template or two soon...*
+```
+oc apply -f openshift/01-namespace.yaml
+```
