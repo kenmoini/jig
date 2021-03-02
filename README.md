@@ -199,7 +199,7 @@ kustomize build deploy/overlay/kubernetes/ | kubectl create -f -
 
 **Delete deployment**
 ```bash
-kustomize build deploy/overlay/kubernetes/ | kubectl create -f -
+kustomize build deploy/overlay/kubernetes/ | kubectl delete -f -
 ```
 
 ### Deploy to OpenShift using kustomize 
@@ -237,3 +237,10 @@ oc exec $(oc get pods -n jig-workshop-worker | grep jig-workshop-worker- | awk '
 
 **Admin username**
 * `admin@admin.com`
+
+**To delete deployment**
+```bash
+oc process -f deploy/overlay/openshift/mysql-template.yaml  --param=VOLUME_CAPACITY=10Gi | oc delete -f -  -n jig-workshop-worker
+kustomize build deploy/overlay/openshift/ | oc delete -f -
+oc project delete  jig-workshop-worker
+```
