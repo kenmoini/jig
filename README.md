@@ -171,25 +171,69 @@ kubectl apply -f kubernetes/08-ingress.yaml
 ```
 
 ## Deploy using kustomize 
-**Validate**
-```
-kustomize build deploy/overlay/kubernetes/ | more
+### Install kustomize
+[kustomize](https://kubernetes-sigs.github.io/kustomize/installation/)
+```bash
+$ curl -s "https://raw.githubusercontent.com/\
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+$ sudo mv kustomize /usr/local/bin/
 ```
 
-### Deploy to kubernetes
+
+### Deploy to kubernetes using kustomize 
+**Optional update patch-env.yaml**
+This will update the configmap for your deployment
+```
+vim deploy/overlay/kubernetes/patch-env.yaml
+```
+
+**Validate Configs**
+```bash
+kustomize build deploy/overlay/kubernetes/ | less
+```
 
 **Deploy**
-```
+```bash
 kustomize build deploy/overlay/kubernetes/ | kubectl create -f -
 ```
 
-### Deploy to OpenShift
-**Validate**
-```
-kustomize build deploy/overlay/openshift/ | more
+**Delete deployment**
+```bash
+kustomize build deploy/overlay/kubernetes/ | kubectl create -f -
 ```
 
-**Deploy**
+### Deploy to OpenShift using kustomize 
+
+**Create jig-workshop-worker project**
+```bash
+oc new-project  jig-workshop-worker
 ```
+
+**Deploy mysql database**
+```bash
+oc process -f deploy/overlay/openshift/mysql-template.yaml  --param=VOLUME_CAPACITY=10Gi | oc create -f -  -n jig-workshop-worker
+```
+
+**Optional update patch-env.yaml**
+This will update the configmap for your deployment
+```
+vim deploy/overlay/openshift/patch-env.yaml
+```
+
+**Validate Configs**
+```bash
+kustomize build deploy/overlay/openshift/ | less
+```
+
+**Deploy application**
+```bash
 kustomize build deploy/overlay/openshift/ | oc create -f -
 ```
+
+**Get admin password**
+```bash
+oc exec $(oc get pods -n jig-workshop-worker | grep jig-workshop-worker- | awk '{print $1}')  -- cat storage/app/generated_admin_password
+```
+
+**Admin username**
+* `admin@admin.com`
