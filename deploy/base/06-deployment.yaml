@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jig-workshop-worker
+  namespace: jig-workshop-worker
+  labels:
+    app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker
+spec:
+  selector:
+    matchLabels:
+      app: jig-workshop-worker
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: jig-workshop-worker # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: jig-workshop-worker
+          imagePullPolicy: Always
+          image: quay.io/kenmoini/jig:latest
+          env:
+            - name: GENERATE_SQLITE_DB
+              value: "false"
+            - name: MIGRATE_DATABASE
+              value: "false"
+            - name: SEED_INITIAL_ADMIN
+              value: "false"
+            - name: SEED_DATABASE
+              value: "false"
+            - name: COPY_ENV_FILE
+              value: "false"
+            - name: GENERATE_ENV_KEY
+              value: "false"
+            - name: COPY_ENV_FILE_FROM_CONFIGMAP
+              value: "true"
+          ports:
+            - containerPort: 8080
+              name: web
+          volumeMounts:
+            - name: jig-env
+              mountPath: "/var/www/data"
+              readOnly: true
+      volumes:
+        # You set volumes at the Pod level, then mount them into containers inside that Pod
+        - name: jig-env
+          configMap:
+            # Provide the name of the ConfigMap you want to mount.
+            name: jig-env
+            # An array of keys from the ConfigMap to create as files
+            items:
+              - key: ".env"
+                path: ".env"

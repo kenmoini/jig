@@ -1,0 +1,18 @@
+---
+# Headless service for stable DNS entries of StatefulSet members.
+apiVersion: v1
+kind: Service
+metadata:
+  name: jig-mysql-svc
+  namespace: jig-workshop-worker
+  labels:
+    app: jig-mysql
+    app.kubernetes.io/name: jig-mysql
+    app.kubernetes.io/part-of: jig-workshop-worker
+spec:
+  ports:
+    - name: mysql
+      port: 3306
+  clusterIP: None
+  selector:
+    app: jig-mysql

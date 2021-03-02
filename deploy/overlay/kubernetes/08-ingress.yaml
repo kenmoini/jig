@@ -1,0 +1,31 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: jig-workshop-worker-ingress
+  namespace: jig-workshop-worker
+  labels:
+    app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "*"
+    #nginx.ingress.kubernetes.io/cors-allow-methods: "GET, HEAD, PUT, POST, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "*"
+    #nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,X-Forwarded-For"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+spec:
+  tls:
+    - hosts:
+        - jig.polyglot.academy
+      secretName: site-jig-tls
+  rules:
+    - host: jig.polyglot.academy
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jig-workshop-worker-svc
+              servicePort: 8080

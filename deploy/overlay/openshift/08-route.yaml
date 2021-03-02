@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app: jig-workshop-worker
+    app.kubernetes.io/name: jig-workshop-worker
+    app.kubernetes.io/part-of: jig-workshop-worker
+  name: jig-workshop-worker-svc
+  namespace: jig-workshop-worker
+spec:
+  port:
+    targetPort: web
+  to:
+    kind: Service
+    name: jig-workshop-worker-svc
+    weight: 100
+  wildcardPolicy: None

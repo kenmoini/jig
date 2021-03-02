@@ -1,0 +1,10 @@
+bases:
+- ../../base
+resources:
+- 01-namespace.yaml
+- 02-mysql-pv.yaml
+- 03-mysql-deployment.yaml
+- 04-mysql-services.yaml
+- 08-ingress.yaml
+patchesStrategicMerge:
+  - patch-env.yaml

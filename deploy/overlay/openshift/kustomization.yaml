@@ -1,0 +1,6 @@
+bases:
+- ../../base
+resources:
+- 08-route.yaml
+patchesStrategicMerge:
+  - patch-env.yaml

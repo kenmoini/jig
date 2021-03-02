@@ -170,6 +170,77 @@ kubectl apply -f kubernetes/07-service.yaml
 kubectl apply -f kubernetes/08-ingress.yaml
 ```
 
-### Deploy to OpenShift
+## Deploy using kustomize 
+### Install kustomize
+[kustomize](https://kubernetes-sigs.github.io/kustomize/installation/)
+```bash
+$ curl -s "https://raw.githubusercontent.com/\
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+$ sudo mv kustomize /usr/local/bin/
+```
 
-*Coming soon...though you can also just use most of the K8s manifests upto the ingress, might need to swap that out for a Route object...will have a Template or two soon...*
+
+### Deploy to kubernetes using kustomize 
+**Optional update patch-env.yaml**  
+*This will update the configmap for your deployment*
+```
+vim deploy/overlay/kubernetes/patch-env.yaml
+```
+
+**Validate Configs**
+```bash
+kustomize build deploy/overlay/kubernetes/ | less
+```
+
+**Deploy**
+```bash
+kustomize build deploy/overlay/kubernetes/ | kubectl create -f -
+```
+
+**Delete deployment**
+```bash
+kustomize build deploy/overlay/kubernetes/ | kubectl delete -f -
+```
+
+### Deploy to OpenShift using kustomize 
+
+**Create jig-workshop-worker project**
+```bash
+oc new-project  jig-workshop-worker
+```
+
+**Deploy mysql database**
+```bash
+oc process -f deploy/overlay/openshift/mysql-template.yaml  --param=VOLUME_CAPACITY=10Gi | oc create -f -  -n jig-workshop-worker
+```
+
+**Optional update patch-env.yaml**  
+*This will update the configmap for your deployment*
+```
+vim deploy/overlay/openshift/patch-env.yaml
+```
+
+**Validate Configs**
+```bash
+kustomize build deploy/overlay/openshift/ | less
+```
+
+**Deploy application**
+```bash
+kustomize build deploy/overlay/openshift/ | oc create -f -
+```
+
+**Get admin password**
+```bash
+oc exec $(oc get pods -n jig-workshop-worker | grep jig-workshop-worker- | awk '{print $1}')  -- cat storage/app/generated_admin_password
+```
+
+**Admin username**
+* `admin@admin.com`
+
+**To delete deployment**
+```bash
+oc process -f deploy/overlay/openshift/mysql-template.yaml  --param=VOLUME_CAPACITY=10Gi | oc delete -f -  -n jig-workshop-worker
+kustomize build deploy/overlay/openshift/ | oc delete -f -
+oc project delete  jig-workshop-worker
+```
