@@ -181,8 +181,8 @@ $ sudo mv kustomize /usr/local/bin/
 
 
 ### Deploy to kubernetes using kustomize 
-**Optional update patch-env.yaml**
-This will update the configmap for your deployment
+**Optional update patch-env.yaml**  
+*This will update the configmap for your deployment*
 ```
 vim deploy/overlay/kubernetes/patch-env.yaml
 ```
@@ -214,8 +214,8 @@ oc new-project  jig-workshop-worker
 oc process -f deploy/overlay/openshift/mysql-template.yaml  --param=VOLUME_CAPACITY=10Gi | oc create -f -  -n jig-workshop-worker
 ```
 
-**Optional update patch-env.yaml**
-This will update the configmap for your deployment
+**Optional update patch-env.yaml**  
+*This will update the configmap for your deployment*
 ```
 vim deploy/overlay/openshift/patch-env.yaml
 ```
